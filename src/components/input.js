@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, StyleSheet, Dimensions,View} from 'react-native';
+import {TextInput, StyleSheet, Dimensions, View} from 'react-native';
 import PropTypes from 'prop-types';
 
 const windowWidth = Dimensions.get('window').width;
@@ -10,10 +10,11 @@ const input = ({
   placeholder,
   secureTextEntry,
   keyboardType,
+  onBlur,
   ...props
 }) => {
   return (
-      <TextInput
+    <TextInput
       underlineColorAndroid="transparent"
       style={styles.input}
       placeholder={placeholder}
@@ -21,9 +22,9 @@ const input = ({
       value={value}
       secureTextEntry={secureTextEntry}
       keyboardType={keyboardType}
-     autoCapitalize="none"
+      autoCapitalize="none"
+      onBlur={onBlur}
     />
-    
   );
 };
 
@@ -43,7 +44,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 10,
     margin: 10,
-   
   },
 });
 

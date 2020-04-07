@@ -31,6 +31,7 @@ function Login({signIn, navigation, error, ...props}) {
 
   const errorMsg = error ? <Text style={styles.errorText}>{error}</Text> : null;
 
+  
   return (
     <View style={{flex: 1}}>
       <HeadLine content="Giriş Yap" />

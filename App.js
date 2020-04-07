@@ -134,7 +134,7 @@ export default function App() {
             name="Register"
             component={Register}
             options={{
-              title: null
+              headerShown: false,
             }}
           />
            <MainStack.Screen

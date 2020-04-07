@@ -15,6 +15,7 @@
     "@react-navigation/native": "^5.0.9",
     "@react-navigation/stack": "^5.1.1",
     "firebase": "^7.11.0",
+    "formik": "^2.1.4",
     "jetifier": "^1.6.5",
     "native-base": "^2.13.8",
     "react": "16.9.0",
@@ -27,7 +28,8 @@
     "react-native-vector-icons": "^6.6.0",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "yup": "^0.28.3"
   },
   "devDependencies": {
     "@babel/core": "7.8.6",
