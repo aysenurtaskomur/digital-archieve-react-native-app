@@ -14,10 +14,12 @@ function Register({signUp, navigation, error, ...props}) {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         navigation.navigate('MainNavigator', {screen: 'Home'});
+        console.log(user.email);
       }
     });
   }, []);
 
+  const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
  
@@ -26,10 +28,11 @@ function Register({signUp, navigation, error, ...props}) {
     <View style={{flex: 1}}>
       <HeadLine content="KAYIT OL" />
       <View style={styles.container}>
-        {/* <InputComp
+        <InputComp
           placeholder="Ad Soyad"
-          onChangeText={value => onEmailChanged(value)}
-        /> */}
+          value={fullname}
+          onChangeText={value => setFullname(value)}
+        />
         <InputComp
           placeholder="Mail"
           value={email}
@@ -46,7 +49,7 @@ function Register({signUp, navigation, error, ...props}) {
          {errorMsg}
         <ButtonComp
           title="KAYDOL"
-          onPress={() => signUp(email, password)}
+          onPress={() =>{ signUp(email, password); console.log(fullname);}}
           //loading={loading}
         />
       </View>

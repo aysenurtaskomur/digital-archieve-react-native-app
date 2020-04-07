@@ -7,7 +7,6 @@ export default function SplashPage({navigation}) {
   console.log("Splash Effect");
   firebase.auth().signOut();
     setTimeout(() => {
-     firebase.auth().signOut()
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           navigation.navigate('MainNavigator', {screen: 'Home'});
