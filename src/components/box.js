@@ -21,7 +21,7 @@ export default function box({navigation}) {
             navigation.navigate('ListDetail');
           }}>
           <View style={styles.size}>
-            <Text>fdgdfg</Text>
+            <Text style={{ fontSize: 20}}>Liste</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     backgroundColor: '#90A4AE',
+    alignItems: 'center',
+    justifyContent: 'center',
+   
   },
   content: {
     width: windowWidth / 2,

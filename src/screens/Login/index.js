@@ -14,6 +14,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {signIn} from '../../redux/actions/authActions';
 import firebase from 'firebase';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -26,29 +28,61 @@ function Login({signIn, navigation, error, ...props}) {
     });
   }, []);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
 
   const errorMsg = error ? <Text style={styles.errorText}>{error}</Text> : null;
 
-  
+  handleSubmit = values =>{
+    signIn(values.email,values.password);
+  }
   return (
     <View style={{flex: 1}}>
       <HeadLine content="Giriş Yap" />
-
       <View style={styles.viewStyle}>
-        <InputComp
+      <Formik
+          initialValues={{email: '', password: ''}}
+          validationSchema={Yup.object().shape({
+            email: Yup.string()
+              .email('Geçersiz Format')
+              .required('Email alanı zorunlu'),
+            password: Yup.string()
+              .min(8, 'Şifre en az 8 karakter olmalı')
+              .required('Şifre alanı zorunlu'),
+          })}
+          onSubmit={values => {
+            handleSubmit(values);
+          }}>
+          {({
+            values,
+            handleChange,
+            handleSubmit,
+            errors,
+            touched,
+            setFieldTouched,
+          }) => (
+      <React.Fragment>
+      <View error={errors.email && touched.email}>
+         <InputComp
           placeholder=" Email"
-          value={email}
-          onChangeText={value => setEmail(value)}
+          value={values.email}
+          onChangeText={handleChange('email')}
+          onBlur={() => setFieldTouched('email')}
           keyboardType="email-address"
         />
-        <InputComp
+      </View>
+      { (errors.email && touched.email) && <Text style={{color: 'red'}}>{errors.email}</Text>}
+
+        <View error={errors.password && touched.password}>
+          <InputComp
           placeholder=" Şifre"
-          value={password}
-          onChangeText={value => setPassword(value)}
+          value={values.password}
+          onChangeText={handleChange('password')}
+          onBlur={() => setFieldTouched('email')}
           secureTextEntry
         />
+        </View>
+         { (errors.password && touched.password) && <Text style={{color: 'red'}}>{errors.password}</Text>}
 
         <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
           <Text style={styles.textStyle}>Şifremi Unuttum</Text>
@@ -58,16 +92,18 @@ function Login({signIn, navigation, error, ...props}) {
 
         <ButtonComp
           title="GİRİŞ"
-          onPress={() => {
-            signIn(email, password);
-          }}
+          onPress={handleSubmit}
+          disabled={!values.email || !values.password || !values.fullName}
           //loading={loading}
         />
 
         <Text style={{fontSize: 16}}>Bir hesabın yok mu? </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.textStyle}> Kaydol.</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>  
+        </React.Fragment>
+          )}
+        </Formik>
       </View>
     </View>
   );

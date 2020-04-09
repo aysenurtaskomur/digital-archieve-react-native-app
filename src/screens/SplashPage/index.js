@@ -5,7 +5,7 @@ import firebase from 'firebase';
 export default function SplashPage({navigation}) {
   React.useEffect(() => {
   console.log("Splash Effect");
-  //firebase.auth().signOut();
+  firebase.auth().signOut();
     setTimeout(() => {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {

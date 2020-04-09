@@ -1,9 +1,12 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet,Dimensions} from 'react-native';
+
+
+const windowHeight = Dimensions.get('window').height;
 
 const headline = ({content}) => {
   return (
-    <View style={{flex: 5 / 4, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={{height:windowHeight/3, alignItems: 'center', justifyContent: 'center'}}>
       <Text style={styles.headlineStyle}>{content}</Text>
     </View>
   );

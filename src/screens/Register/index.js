@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Text, Alert} from 'react-native';
+import {View, StyleSheet, Text, KeyboardAvoidingView,Dimensions,ScrollView} from 'react-native';
 import InputComp from '../../components/input';
 import ButtonComp from '../../components/button';
 import HeadLine from '../../components/headline';
@@ -9,6 +9,7 @@ import {signUp} from '../../redux/actions/authActions';
 import firebase from 'firebase';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
+
 
 function Register({signUp, navigation, error, ...props}) {
   useEffect(() => {
@@ -32,7 +33,8 @@ function Register({signUp, navigation, error, ...props}) {
   };
 
   return (
-    <View style={{flex: 1}}>
+     <ScrollView>
+     <KeyboardAvoidingView style={{ flex: 1}} behavior="position">
       <HeadLine content="KAYIT OL" />
       <View style={styles.container}>
         <Formik
@@ -40,7 +42,8 @@ function Register({signUp, navigation, error, ...props}) {
           validationSchema={Yup.object().shape({
             fullName: Yup.string()
               .max(16)
-              .required('Fullname alanını doldurunuz'),
+              .min(5, 'en az 5 karakter')
+              .required('Fullname alanını zorunlu'),
             email: Yup.string()
               .email('Geçersiz Format')
               .required('Email alanı zorunlu'),
@@ -60,48 +63,53 @@ function Register({signUp, navigation, error, ...props}) {
             setFieldTouched,
           }) => (
             <React.Fragment>
-              <View  error={errors.fullName && touched.fullName}>
-                <InputComp
-                  placeholder="Ad Soyad"
-                  value={values.fullName}
-                  onChangeText={handleChange('fullName')}
-                  onBlur={() => setFieldTouched('fullName')}/>
-              </View>
+              
+                <View error={errors.fullName && touched.fullName}>
+                  <InputComp
+                    placeholder="Ad Soyad"
+                    value={values.fullName}
+                    onChangeText={handleChange('fullName')}
+                    onBlur={() => setFieldTouched('fullName')}
+                  />
+                </View>
 
-              <Text style={{color: 'red'}}>{errors.fullName}</Text>
-              <View error={errors.email && touched.email}>
-                <InputComp
-                  placeholder="Mail"
-                  value={values.email}
-                  onChangeText={handleChange('email')}
-                  onBlur={() => setFieldTouched('email')}
-                  keyboardType="email-address"
+                { (errors.fullName && touched.fullName) && <Text style={{color: 'red'}}>{errors.fullName}</Text>}
+                <View error={errors.email && touched.email}>
+                  <InputComp
+                    placeholder="Mail"
+                    value={values.email}
+                    onChangeText={handleChange('email')}
+                    onBlur={() => setFieldTouched('email')}
+                    keyboardType="email-address"
+                  />
+                </View>
+
+                { (errors.email && touched.email) && <Text style={{color: 'red'}}>{errors.email}</Text>}
+                <View error={errors.password && touched.password}>
+                  <InputComp
+                    placeholder="Sifre"
+                    value={values.password}
+                    onChangeText={handleChange('password')}
+                    onBlur={() => setFieldTouched('password')}
+                    secureTextEntry
+                  />
+                </View>
+
+                { (errors.password && touched.password) && <Text style={{color: 'red'}}>{errors.password}</Text>}
+                <ButtonComp
+                  title="KAYDOL"
+                  onPress={handleSubmit}
+                  disabled={!values.email || !values.password || !values.fullName}
+                  //loading={loading}
                 />
-              </View>
-
-              <Text style={{color: 'red'}}>{errors.email}</Text>
-              <View  error={errors.password && touched.password}>
-                <InputComp
-                  placeholder="Sifre"
-                  value={values.password}
-                  onChangeText={handleChange('password')}
-                  onBlur={() => setFieldTouched('password')}
-                  secureTextEntry
-                />
-              </View>
-
-              <Text style={{color: 'red'}}>{errors.password}</Text>
-              <ButtonComp
-                title="KAYDOL"
-                onPress={handleSubmit}
-                //loading={loading}
-              />
-              {errorMsg}
+                {errorMsg}
+             
             </React.Fragment>
           )}
         </Formik>
       </View>
-    </View>
+  </KeyboardAvoidingView> 
+  </ScrollView>
   );
 }
 
