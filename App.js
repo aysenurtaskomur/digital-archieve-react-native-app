@@ -3,7 +3,6 @@ import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
 import Search from './src/screens/Search';
 import AddLink from './src/screens/AddLink';
 import Calendar from './src/screens/Calendar';
@@ -22,7 +21,17 @@ import ReduxThunk from "redux-thunk";
 import reducers from './src/redux/reducers/index';
 
 import Images from './src/themes/images';
+import {decode, encode} from 'base-64'
+import { YellowBox } from 'react-native';
+import _ from 'lodash';
 
+YellowBox.ignoreWarnings(['Setting a timer']);
+const _console = _.clone(console);
+console.warn = message => {
+  if (message.indexOf('Setting a timer') <= -1) {
+    _console.warn(message);
+  }
+};
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const SearchStack = createStackNavigator();
@@ -30,6 +39,12 @@ const CalendarStack = createStackNavigator();
 const AddLinkStack = createStackNavigator();
 const MainStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
+
+
+if (!global.btoa) {  global.btoa = encode }
+
+if (!global.atob) { global.atob = decode }
 
 export function mainNavigator() {
   return (

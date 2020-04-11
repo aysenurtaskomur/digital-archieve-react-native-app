@@ -8,6 +8,8 @@ import Firebase from '../../../config/firebase';
 export default function ForgotPassword({navigation}) {
   const [resetMail, setResetMail] = useState(0);
 
+  console.log("forgot password");
+
   function clicked(mail) {
     console.log('tiklandi');
 

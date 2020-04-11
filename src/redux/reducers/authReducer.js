@@ -7,25 +7,33 @@ export default (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
+        loading:false,
         error: '',
       };
     case actionTypes.SIGNUP_FAILURE:
       return {
         ...state,
         error: action.payload,
+        loading:false,
       };
     case actionTypes.LOGIN_SUCCESS:
       return {
         ...state,
         user: action.payload,
+        loading:false,
         error: '',
       };
     case actionTypes.LOGIN_FAILURE:
       return {
         ...state,
         error: action.payload,
+        loading:false,
       };
-
+    case actionTypes.LOGIN_LOADING:
+      return {
+        ...state,
+        loading: true
+      }
     default:
       return state;
   }

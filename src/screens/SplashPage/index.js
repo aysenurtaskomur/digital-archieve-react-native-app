@@ -1,15 +1,21 @@
 import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import firebase from 'firebase';
+import {CommonActions} from '@react-navigation/native';
 
 export default function SplashPage({navigation}) {
   React.useEffect(() => {
   console.log("Splash Effect");
-  firebase.auth().signOut();
+  //firebase.auth().signOut();
     setTimeout(() => {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-          navigation.navigate('MainNavigator', {screen: 'Home'});
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [{name:'MainNavigator'}],
+            }),
+          );
         } else {
           navigation.navigate('Login');
         }

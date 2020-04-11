@@ -63,3 +63,4 @@ VoximplantDemo.xcworkspace
 android/app/google-services.json
 
 /node_modules
+/config

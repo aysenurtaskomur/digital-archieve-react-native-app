@@ -16,14 +16,19 @@ import {signIn} from '../../redux/actions/authActions';
 import firebase from 'firebase';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
+import {CommonActions} from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 
-function Login({signIn, navigation, error, ...props}) {
+function Login({signIn, navigation, error, loading}) {
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        navigation.navigate('MainNavigator', {screen: 'Home'});
+       //navigation.navigate('MainNavigator', {screen: 'Home'});
+       console.log(user.email)
+
+       
+      
       }
     });
   }, []);
@@ -33,14 +38,14 @@ function Login({signIn, navigation, error, ...props}) {
 
   const errorMsg = error ? <Text style={styles.errorText}>{error}</Text> : null;
 
-  handleSubmit = values =>{
-    signIn(values.email,values.password);
-  }
+  handleSubmit = values => {
+    signIn(values.email, values.password,navigation);
+  };
   return (
     <View style={{flex: 1}}>
       <HeadLine content="Giriş Yap" />
       <View style={styles.viewStyle}>
-      <Formik
+        <Formik
           initialValues={{email: '', password: ''}}
           validationSchema={Yup.object().shape({
             email: Yup.string()
@@ -61,47 +66,52 @@ function Login({signIn, navigation, error, ...props}) {
             touched,
             setFieldTouched,
           }) => (
-      <React.Fragment>
-      <View error={errors.email && touched.email}>
-         <InputComp
-          placeholder=" Email"
-          value={values.email}
-          onChangeText={handleChange('email')}
-          onBlur={() => setFieldTouched('email')}
-          keyboardType="email-address"
-        />
-      </View>
-      { (errors.email && touched.email) && <Text style={{color: 'red'}}>{errors.email}</Text>}
+            <React.Fragment>
+              <View error={errors.email && touched.email}>
+                <InputComp
+                  placeholder=" Email"
+                  value={values.email}
+                  onChangeText={handleChange('email')}
+                  onBlur={() => setFieldTouched('email')}
+                  keyboardType="email-address"
+                />
+              </View>
+              {errors.email && touched.email && (
+                <Text style={{color: 'red'}}>{errors.email}</Text>
+              )}
 
-        <View error={errors.password && touched.password}>
-          <InputComp
-          placeholder=" Şifre"
-          value={values.password}
-          onChangeText={handleChange('password')}
-          onBlur={() => setFieldTouched('email')}
-          secureTextEntry
-        />
-        </View>
-         { (errors.password && touched.password) && <Text style={{color: 'red'}}>{errors.password}</Text>}
+              <View error={errors.password && touched.password}>
+                <InputComp
+                  placeholder=" Şifre"
+                  value={values.password}
+                  onChangeText={handleChange('password')}
+                  onBlur={() => setFieldTouched('password')}
+                  secureTextEntry
+                />
+              </View>
+              {errors.password && touched.password && (
+                <Text style={{color: 'red'}}>{errors.password}</Text>
+              )}
 
-        <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
-          <Text style={styles.textStyle}>Şifremi Unuttum</Text>
-        </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('ForgotPassword')}>
+                <Text style={styles.textStyle}>Şifremi Unuttum</Text>
+              </TouchableOpacity>
 
-        {errorMsg}
+              {errorMsg}
 
-        <ButtonComp
-          title="GİRİŞ"
-          onPress={handleSubmit}
-          disabled={!values.email || !values.password || !values.fullName}
-          //loading={loading}
-        />
+              <ButtonComp
+                title="GİRİŞ"
+                onPress={handleSubmit}
+                disabled={!values.email || !values.password}
+                loading={loading}
+              />
 
-        <Text style={{fontSize: 16}}>Bir hesabın yok mu? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-          <Text style={styles.textStyle}> Kaydol.</Text>
-        </TouchableOpacity>  
-        </React.Fragment>
+              <Text style={{fontSize: 16}}>Bir hesabın yok mu? </Text>
+              <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                <Text style={styles.textStyle}> Kaydol.</Text>
+              </TouchableOpacity>
+            </React.Fragment>
           )}
         </Formik>
       </View>
@@ -139,11 +149,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     user: state.auth.user,
     error: state.auth.error,
+    loading: state.auth.loading,
   };
 };
 
-export default connect(mapStateToProps, {signIn})(Login);
+export default connect(
+  mapStateToProps,
+  {signIn},
+)(Login);

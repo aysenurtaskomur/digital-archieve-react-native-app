@@ -9,13 +9,13 @@ import {signUp} from '../../redux/actions/authActions';
 import firebase from 'firebase';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
+import {CommonActions} from '@react-navigation/native';
 
-
-function Register({signUp, navigation, error, ...props}) {
+function Register({signUp, navigation, error, loading}) {
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        navigation.navigate('MainNavigator', {screen: 'Home'});
+        //navigation.navigate('MainNavigator', {screen: 'Home'});
         console.log(user.email);
       }
     });
@@ -28,7 +28,7 @@ function Register({signUp, navigation, error, ...props}) {
   const errorMsg = error ? <Text style={styles.errorText}>{error}</Text> : null;
 
   handleSubmit = values => {
-    signUp(values.email, values.password);
+    signUp(values.email, values.password,navigation);
     console.log(values.fullName);
   };
 
@@ -100,7 +100,7 @@ function Register({signUp, navigation, error, ...props}) {
                   title="KAYDOL"
                   onPress={handleSubmit}
                   disabled={!values.email || !values.password || !values.fullName}
-                  //loading={loading}
+                  loading={loading}
                 />
                 {errorMsg}
              
@@ -129,6 +129,7 @@ const MapStateToProps = state => {
   return {
     user: state.auth.user,
     error: state.auth.error,
+    loading: state.auth.loading,
   };
 };
 
