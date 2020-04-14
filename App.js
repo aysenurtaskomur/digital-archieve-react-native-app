@@ -69,7 +69,8 @@ export function mainNavigator() {
           }
           return <Icons name={iconName} color={color} />;
         },
-      })}
+      })
+      }
       tabBarOptions={{
         showLabel: false,
         activeTintColor: 'grey',
@@ -87,7 +88,7 @@ export function mainNavigator() {
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name={'Home'} component={Home} />
+      <HomeStack.Screen name={'Home'} options={{headerShown: false}}  component={Home} />
       <HomeStack.Screen name={'ListDetail'} component={ListDetail} />
     </HomeStack.Navigator>
   );
