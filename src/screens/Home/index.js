@@ -3,9 +3,9 @@ import {View,Text,Linking,Alert} from 'react-native';
 import ListBox from '../../components/listBox';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import firebase from 'firebase';
+import ThemeContext from '../../components/context'
 
-
-export default function Home({navigation,url}){
+export default function Home({navigation}){
   useEffect(() => {
     // firebase.auth().onAuthStateChanged(user => {
     //   if (user) {
@@ -29,13 +29,17 @@ export default function Home({navigation,url}){
     //     Alert.alert("yok");
     //   }
     // }).catch(err => console.error('An error occurred', err));
-
+    
   }, []);
   return (
     <SafeAreaProvider>
       <View>
+      <ThemeContext.Consumer>
+      {
+        context => <Text>{ context }</Text>
+      }
+      </ThemeContext.Consumer>
         <ListBox navigation={navigation} />
-        <Text>{url}</Text>
       </View>
     </SafeAreaProvider>
   );

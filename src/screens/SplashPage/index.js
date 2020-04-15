@@ -2,10 +2,11 @@ import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import firebase from 'firebase';
 import {CommonActions} from '@react-navigation/native';
+import ThemeContext from '../../components/context'
 
 export default function SplashPage({navigation}) {
   React.useEffect(() => {
-  console.log("Splash Effect");
+  //console.log("Splash Effect");
   //firebase.auth().signOut();
     setTimeout(() => {
       firebase.auth().onAuthStateChanged((user) => {
@@ -13,20 +14,23 @@ export default function SplashPage({navigation}) {
           navigation.dispatch(
             CommonActions.reset({
               index: 1,
-              routes: [{name:'MainNavigator'}],
+              routes: [
+                //{ name:'MainNavigator',params: {url:url}},
+                {name: 'MainNavigator'},
+              ],
             }),
           );
         } else {
           navigation.navigate('Login');
         }
       });
-      
     }, 1500);
   }, []);
 
   return (
     <View style={styles.container}>
       <Text>SPLASH PAGE</Text>
+     
     </View>
   );
 }

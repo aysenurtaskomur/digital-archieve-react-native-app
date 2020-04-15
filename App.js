@@ -17,12 +17,12 @@ import ForgotPassword from './src/screens/ForgotPassword';
 import Icons from './src/components/icons';
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
-import ReduxThunk from "redux-thunk";
+import ReduxThunk from 'redux-thunk';
 import reducers from './src/redux/reducers/index';
-
+import ThemeContext from './src/components/context'
 import Images from './src/themes/images';
-import {decode, encode} from 'base-64'
-import { YellowBox } from 'react-native';
+import {decode, encode} from 'base-64';
+import {YellowBox} from 'react-native';
 import _ from 'lodash';
 
 YellowBox.ignoreWarnings(['Setting a timer']);
@@ -40,11 +40,13 @@ const AddLinkStack = createStackNavigator();
 const MainStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+if (!global.btoa) {
+  global.btoa = encode;
+}
 
-
-if (!global.btoa) {  global.btoa = encode }
-
-if (!global.atob) { global.atob = decode }
+if (!global.atob) {
+  global.atob = decode;
+}
 
 export function mainNavigator() {
   return (
@@ -69,8 +71,7 @@ export function mainNavigator() {
           }
           return <Icons name={iconName} color={color} />;
         },
-      })
-      }
+      })}
       tabBarOptions={{
         showLabel: false,
         activeTintColor: 'grey',
@@ -88,7 +89,11 @@ export function mainNavigator() {
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name={'Home'} options={{headerShown: false}}  component={Home} />
+      <HomeStack.Screen
+        name={'Home'}
+        options={{headerShown: false}}
+        component={Home}
+      />
       <HomeStack.Screen name={'ListDetail'} component={ListDetail} />
     </HomeStack.Navigator>
   );
@@ -126,19 +131,34 @@ function AddLinkStackScreen() {
   );
 }
 
-export default function App() {
-  const store = createStore(reducers, {} , applyMiddleware(ReduxThunk));
+
+
+export default function App(props) {
+  const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+  const [count, setCount] = useState('');
+
+  useEffect(() => {
+    
+    setCount(props.url);
+    console.log(count);
+  });
+    
+  
+
+  //console.log(props.url);
   return (
-    <Provider store={store}>
+    <ThemeContext.Provider value = { count} store={store}>
       <NavigationContainer>
         <MainStack.Navigator initialRouteName="SplashPage">
+          {/* {props => <MainStack.Screen {...props} url={props.url} />} */}
+
           <MainStack.Screen
-            name="SplashPage"
-            component={SplashPage}
-            options={{
-              headerShown: false,
-            }}
-          />
+              name="SplashPage"
+              component={SplashPage}
+              options={{
+                headerShown: false,
+              }}
+            />
           <MainStack.Screen
             name="Login"
             component={Login}
@@ -153,11 +173,11 @@ export default function App() {
               headerShown: false,
             }}
           />
-           <MainStack.Screen
+          <MainStack.Screen
             name="ForgotPassword"
             component={ForgotPassword}
             options={{
-              title: null
+              title: null,
             }}
           />
           <MainStack.Screen
@@ -169,6 +189,6 @@ export default function App() {
           />
         </MainStack.Navigator>
       </NavigationContainer>
-    </Provider>
+    </ThemeContext.Provider>
   );
 }
