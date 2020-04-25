@@ -16,6 +16,7 @@ const button = ({onPress, title, loading,disabled}) => {
         loadingProps={{color:'white'}}
         titleStyle={{color:'white'}}
         disabled={disabled}
+        touchSoundDisabled={true}
       />
     </View>
   );

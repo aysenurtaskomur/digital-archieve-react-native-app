@@ -19,7 +19,17 @@ export const signUp = (email, password, navigation) => {
           }),
         );
 
-      })
+    firebase.auth().onAuthStateChanged(user => {
+       if (user) {
+         firebase.firestore().collection('users')
+          .doc(user.uid).collection("Kayıtlarım").doc("kayıtlar").set({
+            link:"ilk kayit"
+          });
+
+          
+       }
+     })
+     })
       .catch(err => {
         dispatch({type: actionTypes.SIGNUP_FAILURE, payload: err.message});
       });

@@ -11,12 +11,13 @@ const input = ({
   secureTextEntry,
   keyboardType,
   onBlur,
+  style,
   ...props
 }) => {
   return (
     <TextInput
       underlineColorAndroid="transparent"
-      style={styles.input}
+      style={style ? style:styles.input}
       placeholder={placeholder}
       onChangeText={onChangeText}
       value={value}

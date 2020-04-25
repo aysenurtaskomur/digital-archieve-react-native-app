@@ -1,5 +1,8 @@
 export default {
   user: null,
   error: '',
-  loading: false
+  loading: false,
+  receivedLink: '',
+  links: [],
+  listName: ''
 }

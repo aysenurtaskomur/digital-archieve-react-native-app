@@ -11,6 +11,7 @@ const images = {
   SearchInactive: require('../../assets/search-inactive.png'),
   ProfileActive: require('../../assets/profile-active.png'),
   ProfileInactive: require('../../assets/profile-inactive.png'),
+  AddList: require('../../assets/add-list.png')
 }
 
 module.exports = images;

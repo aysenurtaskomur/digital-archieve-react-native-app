@@ -19,7 +19,7 @@ import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import reducers from './src/redux/reducers/index';
-import ThemeContext from './src/components/context'
+import initialState from './src/redux/reducers/initialState';
 import Images from './src/themes/images';
 import {decode, encode} from 'base-64';
 import {YellowBox} from 'react-native';
@@ -94,7 +94,11 @@ function HomeStackScreen() {
         options={{headerShown: false}}
         component={Home}
       />
-      <HomeStack.Screen name={'ListDetail'} component={ListDetail} />
+      <HomeStack.Screen
+        name={'ListDetail'}
+        options={{headerShown: false}}
+        component={ListDetail}
+      />
     </HomeStack.Navigator>
   );
 }
@@ -102,7 +106,7 @@ function HomeStackScreen() {
 function ProfileStackScreen() {
   return (
     <ProfileStack.Navigator>
-      <ProfileStack.Screen name="Profile" component={Profile} />
+      <ProfileStack.Screen name="Profile" options={{ headerShown:false}} component={Profile} />
     </ProfileStack.Navigator>
   );
 }
@@ -110,7 +114,7 @@ function ProfileStackScreen() {
 function SearchStackScreen() {
   return (
     <SearchStack.Navigator>
-      <SearchStack.Screen name="Search" component={Search} />
+      <SearchStack.Screen name="Search" options={{ headerShown:false}} component={Search} />
     </SearchStack.Navigator>
   );
 }
@@ -118,7 +122,7 @@ function SearchStackScreen() {
 function CalendarStackScreen() {
   return (
     <CalendarStack.Navigator>
-      <CalendarStack.Screen name="Calendar" component={Calendar} />
+      <CalendarStack.Screen name="Calendar" options={{ headerShown:false}} component={Calendar} />
     </CalendarStack.Navigator>
   );
 }
@@ -126,39 +130,35 @@ function CalendarStackScreen() {
 function AddLinkStackScreen() {
   return (
     <AddLinkStack.Navigator>
-      <AddLinkStack.Screen name="AddLink" component={AddLink} />
+      <AddLinkStack.Screen  name="AddLink" options={{ headerShown:false}}  component={AddLink} />
     </AddLinkStack.Navigator>
   );
 }
 
-
-
 export default function App(props) {
   const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
-  const [count, setCount] = useState('');
+  // const [count, setCount] = useState('');
 
   useEffect(() => {
-    
-    setCount(props.url);
-    console.log(count);
-  });
-    
-  
+    if (props) {
+      initialState.receivedLink = props.url;
+    }
 
-  //console.log(props.url);
+    // setCount(props.url);
+    // console.log(count);
+  });
+
   return (
-    <ThemeContext.Provider value = { count} store={store}>
+    <Provider value={initialState.link} store={store}>
       <NavigationContainer>
         <MainStack.Navigator initialRouteName="SplashPage">
-          {/* {props => <MainStack.Screen {...props} url={props.url} />} */}
-
           <MainStack.Screen
-              name="SplashPage"
-              component={SplashPage}
-              options={{
-                headerShown: false,
-              }}
-            />
+            name="SplashPage"
+            component={SplashPage}
+            options={{
+              headerShown: false,
+            }}
+          />
           <MainStack.Screen
             name="Login"
             component={Login}
@@ -189,6 +189,6 @@ export default function App(props) {
           />
         </MainStack.Navigator>
       </NavigationContainer>
-    </ThemeContext.Provider>
+    </Provider>
   );
 }

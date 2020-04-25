@@ -8,28 +8,16 @@ import {useSafeArea} from 'react-native-safe-area-context';
 
 export default function listBox({navigation}) {
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.list}>
+    //kayit sayisi kadar cagirmak icin
+      <View style={styles.container}>
         <Box navigation={navigation} />
-        <Box />
-        <Box />
-        <Box />
-        <Box />
-        <Box />
-        <Box />
       </View>
-    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: windowWidth,
-    height: windowHeight,
-    backgroundColor: 'white',
+    flex: 1
   },
-  list: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
+
 });

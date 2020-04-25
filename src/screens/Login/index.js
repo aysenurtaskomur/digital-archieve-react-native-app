@@ -16,7 +16,6 @@ import {signIn} from '../../redux/actions/authActions';
 import firebase from 'firebase';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
-import {CommonActions} from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 
