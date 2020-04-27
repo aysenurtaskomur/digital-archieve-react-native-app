@@ -12,14 +12,17 @@ import InputComp from '../../components/input';
 import ButtonComp from '../../components/button';
 import FabComp from '../../components/fab';
 import firebase from 'firebase';
+import Box from '../../components/box';
 
 import {connect} from 'react-redux';
-import {createList} from '../../redux/actions/listActions';
+import {createList, actdeneme} from '../../redux/actions/listActions';
+import initialState from '../../redux/reducers/initialState';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-function Home({navigation}) {
+function Home({navigation,...props}) {
+ 
   const [modalVisible, setModalVisible] = useState(false);
   const [listeAdi, setListeAdi] = useState('');
 
@@ -27,22 +30,27 @@ function Home({navigation}) {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         console.log(user.email);
+        //console.log(props.createList(sdsd));
       }
     });
+    console.log("x: " + listeAdi)
   }, []);
 
   function addList(listeAdi) {
-    //reduxa istek atcan
-    //listaction i cagircan
-    createList(listeAdi);
+    props.createList(listeAdi);
+   
     setModalVisible(!modalVisible);
   }
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <ListBox navigation={navigation} />
+      <ListBox navigation={navigation} title={listeAdi} />
 
-      <FabComp onPress={()=>{setModalVisible(true)}}/>
+      <FabComp
+        onPress={() => {
+          setModalVisible(true);
+        }}
+      />
 
       <Modal
         animationType="slide"
@@ -65,7 +73,8 @@ function Home({navigation}) {
             <ButtonComp
               title="Oluştur"
               onPress={() => {
-                addList(listeAdi);
+               addList(listeAdi);
+               
               }}
             />
           </View>
@@ -129,13 +138,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = state => {
-  return {
-    listName: state.list.listName,
-  };
-};
 
 export default connect(
-  mapStateToProps,
+  null,
   {createList},
 )(Home);

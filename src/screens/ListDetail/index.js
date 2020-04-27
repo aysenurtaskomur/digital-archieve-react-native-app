@@ -17,7 +17,11 @@ const windowHeight = Dimensions.get('window').height;
 
 
 export default class ListDetail extends Component {
+// componentDidMount(){
+//   console.log(initialState.listName)
+// }  
   render() {
+
     return (
       <View style={styles.context}>
         <LinkCard/>
