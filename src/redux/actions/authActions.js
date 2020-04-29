@@ -3,6 +3,7 @@ import firebase from 'firebase';
 import {CommonActions} from '@react-navigation/native';
 
 export const signUp = (email, password, navigation) => {
+  
   return dispatch => {
     dispatch({type: actionTypes.LOGIN_LOADING});
 
@@ -19,17 +20,21 @@ export const signUp = (email, password, navigation) => {
           }),
         );
 
-    firebase.auth().onAuthStateChanged(user => {
-       if (user) {
-         firebase.firestore().collection('users')
-          .doc(user.uid).collection("Kayıtlarım").doc("kayıtlar").set({
-            link:"ilk kayit"
-          });
-
-          
-       }
-     })
-     })
+        firebase.auth().onAuthStateChanged(user => {
+          if (user) {
+            firebase
+              .firestore()
+              .collection('users')
+              .doc(user.uid)
+              .set({
+                dfdfg: 'dfgf',
+              })
+              .then(() => {
+                console.log('yazildi');
+              });
+          }
+        });
+      })
       .catch(err => {
         dispatch({type: actionTypes.SIGNUP_FAILURE, payload: err.message});
       });

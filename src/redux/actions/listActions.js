@@ -5,28 +5,47 @@ import initialState from '../../redux/reducers/initialState';
 export const createList = listName => {
   console.log('console1: ' + listName);
   const user = firebase.auth().currentUser;
+  // var arr=[];
   // var obj = {name: listName, code: '#d35400'};
+  // var assign = arr.push(obj);
   return dispatch => {
     return dispatch({
-      type:actionTypes.CREATE_LIST,
-      payload: 
-      firebase
+      type: actionTypes.CREATE_LIST,
+      payload: firebase
         .firestore()
         .collection('users')
         .doc(user.uid)
-        .collection(listName)
-        .add({
-          link: '1.kayıt',
+        .collection('Listeler')
+        .doc(listName)
+        .set({
+          liste: 'dfdfdd',
         })
         .then(() => {
           console.log('console2: ' + listName);
           dispatch({type: actionTypes.CREATE_LIST});
           console.log('console3: ' + listName);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
-        })
-    })
-    
+        }),
+    });
+  };
+};
+
+export const getList = () => {
+  const user = firebase.auth().currentUser;
+  return dispatch => {
+    console.log("actions");
+    return dispatch({
+      type: actionTypes.GET_LIST,
+      payload: firebase
+      .firestore()
+      .collection('users')
+      .doc(user.uid)
+      .collection('Listeler')
+      .get()
+      .then(querySnapshot => querySnapshot.docs)
+      .catch(error=>{console.log(error)})
+    });
   };
 };

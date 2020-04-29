@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React,{useEffect} from 'react';
 import {
   Text,
   View,
@@ -10,17 +10,24 @@ import CardView from 'react-native-cardview';
 import {ScreenContainer} from 'react-native-screens';
 import {FlatGrid, SectionGrid} from 'react-native-super-grid';
 
+import {connect} from 'react-redux';
+import {getList} from '../redux/actions/listActions';
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const box = ({navigation, title}) => {
-  console.log('test: ' + title);
+const box = ({navigation, title,...props}) => {
+  // console.log('test: ' + title);
+   
+  // useEffect(() => {
+  //   props.getList();
+  // }, [])
 
   const items = [
     {name: 'TURQUOISE', code: '#1abc9c'},
-    // {name: 'EMERALD', code: '#2ecc71'},
-    // {name: 'PETER RIVER', code: '#3498db'},
-    // {name: 'AMETHYST', code: '#9b59b6'},
+    {name: 'EMERALD', code: '#2ecc71'},
+    {name: 'PETER RIVER', code: '#3498db'},
+    //{name: 'AMETHYST', code: '#9b59b6'},
     // {name: 'WET ASPHALT', code: '#34495e'},
     // {name: 'GREEN SEA', code: '#16a085'},
     // {name: 'NEPHRITIS', code: '#27ae60'},
@@ -38,7 +45,7 @@ const box = ({navigation, title}) => {
     // {name: 'SILVER', code: '#bdc3c7'},
   ];
 
-  //if props varsa var obj={name: {props} , code: random} olacak
+  //if props varsa var obj={name: {props} , code: random} 
   // if (title != '') {
   //   var obj = {name: title, code: '#d35400'};
   //   items.push(obj);
@@ -58,7 +65,8 @@ const box = ({navigation, title}) => {
           <TouchableOpacity
             style={[styles.itemContainer, {backgroundColor: item.code}]}
             onPress={() => {
-              navigation.navigate('ListDetail');
+               props.getList();
+              //navigation.navigate('ListDetail');
             }}>
             <View>
               <Text style={styles.itemName}>{item.name}</Text>
@@ -100,4 +108,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default box;
+ export default connect(null,{getList})(box);

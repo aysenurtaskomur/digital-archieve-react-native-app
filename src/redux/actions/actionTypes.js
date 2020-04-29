@@ -6,3 +6,4 @@ export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
 export const LOGIN_LOADING = 'LOGIN_LOADING';
 export const SAVE_LINK = 'SAVE_LINK';
 export const CREATE_LIST = "CREATE_LIST";
+export const GET_LIST = 'GET_LIST';

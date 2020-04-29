@@ -4,5 +4,6 @@ export default {
   loading: false,
   receivedLink: '',
   links: [],
-  listName: ''
+  listName: '',
+  lists: []
 }

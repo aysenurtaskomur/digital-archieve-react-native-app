@@ -15,7 +15,7 @@ import firebase from 'firebase';
 import Box from '../../components/box';
 
 import {connect} from 'react-redux';
-import {createList, actdeneme} from '../../redux/actions/listActions';
+import {createList} from '../../redux/actions/listActions';
 import initialState from '../../redux/reducers/initialState';
 
 const windowWidth = Dimensions.get('window').width;
@@ -30,10 +30,10 @@ function Home({navigation,...props}) {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         console.log(user.email);
-        //console.log(props.createList(sdsd));
+        console.log("test: " + props.lists);
       }
     });
-    console.log("x: " + listeAdi)
+    
   }, []);
 
   function addList(listeAdi) {
@@ -80,6 +80,7 @@ function Home({navigation,...props}) {
           </View>
         </View>
       </Modal>
+      <Text>Listeler: {props.lists}</Text>
     </View>
   );
 }
@@ -138,8 +139,13 @@ const styles = StyleSheet.create({
   },
 });
 
+function mapStateToProps(state) {
+  return {
+    lists: state.ListReducer,
+  };
+}
 
 export default connect(
-  null,
+  mapStateToProps,
   {createList},
 )(Home);
