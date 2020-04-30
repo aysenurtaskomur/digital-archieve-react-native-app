@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {
   Text,
   View,
@@ -16,12 +16,12 @@ import {getList} from '../redux/actions/listActions';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const box = ({navigation, title,...props}) => {
+const box = ({navigation, title, getList}) => {
   // console.log('test: ' + title);
-   
-  // useEffect(() => {
-  //   props.getList();
-  // }, [])
+
+  useEffect(() => {
+    getList();
+  }, []);
 
   const items = [
     {name: 'TURQUOISE', code: '#1abc9c'},
@@ -45,7 +45,7 @@ const box = ({navigation, title,...props}) => {
     // {name: 'SILVER', code: '#bdc3c7'},
   ];
 
-  //if props varsa var obj={name: {props} , code: random} 
+  //if props varsa var obj={name: {props} , code: random}
   // if (title != '') {
   //   var obj = {name: title, code: '#d35400'};
   //   items.push(obj);
@@ -65,8 +65,7 @@ const box = ({navigation, title,...props}) => {
           <TouchableOpacity
             style={[styles.itemContainer, {backgroundColor: item.code}]}
             onPress={() => {
-               props.getList();
-              //navigation.navigate('ListDetail');
+              navigation.navigate('ListDetail');
             }}>
             <View>
               <Text style={styles.itemName}>{item.name}</Text>
@@ -108,4 +107,15 @@ const styles = StyleSheet.create({
   },
 });
 
- export default connect(null,{getList})(box);
+function mapStateToProps(state) {
+  console.log("————-", state.ListReducer.lists );
+  return{
+    currentLists: state.ListReducer.lists,
+  }
+  
+}
+
+export default connect(
+  mapStateToProps,
+  {getList},
+)(box);

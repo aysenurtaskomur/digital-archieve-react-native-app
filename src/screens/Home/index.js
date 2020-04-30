@@ -12,14 +12,9 @@ import InputComp from '../../components/input';
 import ButtonComp from '../../components/button';
 import FabComp from '../../components/fab';
 import firebase from 'firebase';
-import Box from '../../components/box';
-
 import {connect} from 'react-redux';
 import {createList} from '../../redux/actions/listActions';
-import initialState from '../../redux/reducers/initialState';
-
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 function Home({navigation,...props}) {
  
@@ -30,15 +25,13 @@ function Home({navigation,...props}) {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         console.log(user.email);
-        console.log("test: " + props.lists);
       }
     });
-    
   }, []);
+
 
   function addList(listeAdi) {
     props.createList(listeAdi);
-   
     setModalVisible(!modalVisible);
   }
 
@@ -80,7 +73,6 @@ function Home({navigation,...props}) {
           </View>
         </View>
       </Modal>
-      <Text>Listeler: {props.lists}</Text>
     </View>
   );
 }
@@ -139,13 +131,9 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapStateToProps(state) {
-  return {
-    lists: state.ListReducer,
-  };
-}
+
 
 export default connect(
-  mapStateToProps,
+  null,
   {createList},
 )(Home);

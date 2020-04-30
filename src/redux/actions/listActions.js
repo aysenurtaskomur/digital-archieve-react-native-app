@@ -35,17 +35,21 @@ export const createList = listName => {
 export const getList = () => {
   const user = firebase.auth().currentUser;
   return dispatch => {
-    console.log("actions");
-    return dispatch({
-      type: actionTypes.GET_LIST,
-      payload: firebase
+    console.log('actions');
+    firebase
       .firestore()
       .collection('users')
       .doc(user.uid)
       .collection('Listeler')
       .get()
-      .then(querySnapshot => querySnapshot.docs)
+      .then((querySnapshot) => {
+        var listNames = [];
+        querySnapshot.forEach(doc => { 
+          listNames.push(doc.id);
+          // console.log(listNames)
+        })
+        dispatch({type: actionTypes.GET_LIST, payload: listNames});
+      })
       .catch(error=>{console.log(error)})
-    });
   };
 };
