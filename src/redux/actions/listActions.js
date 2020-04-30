@@ -42,13 +42,13 @@ export const getList = () => {
       .doc(user.uid)
       .collection('Listeler')
       .get()
-      .then((querySnapshot) => {
-        var listNames = [];
-        querySnapshot.forEach(doc => { 
-          listNames.push(doc.id);
-          // console.log(listNames)
-        })
-        dispatch({type: actionTypes.GET_LIST, payload: listNames});
+      .then((querySnapshot) =>  {
+        // var listNames = [];
+        // querySnapshot.forEach(doc => { 
+        //   listNames.push(doc.id);
+        //   console.log(listNames)
+        // })
+        dispatch({type: actionTypes.GET_LIST, payload: querySnapshot});
       })
       .catch(error=>{console.log(error)})
   };

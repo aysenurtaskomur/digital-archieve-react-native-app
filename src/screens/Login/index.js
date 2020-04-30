@@ -24,7 +24,7 @@ function Login({signIn, navigation, error, loading}) {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
        //navigation.navigate('MainNavigator', {screen: 'Home'});
-       console.log(user.email)
+       //console.log(user.email)
 
        
       
@@ -150,9 +150,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    user: state.auth.user,
-    error: state.auth.error,
-    loading: state.auth.loading,
+    user: state.AuthReducer.user,
+    error: state.AuthReducer.error,
+    loading: state.AuthReducer.loading,
   };
 };
 

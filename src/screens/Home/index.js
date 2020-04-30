@@ -37,7 +37,7 @@ function Home({navigation,...props}) {
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <ListBox navigation={navigation} title={listeAdi} />
+      <ListBox navigation={navigation} />
 
       <FabComp
         onPress={() => {
@@ -67,7 +67,6 @@ function Home({navigation,...props}) {
               title="Oluştur"
               onPress={() => {
                addList(listeAdi);
-               
               }}
             />
           </View>

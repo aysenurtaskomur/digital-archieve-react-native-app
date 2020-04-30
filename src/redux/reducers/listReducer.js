@@ -6,7 +6,12 @@ export default (state = initialState, action) => {
     case actionTypes.CREATE_LIST:
       return {...state};
     case actionTypes.GET_LIST:
-      return {...state, lists: action.payload};
+      var listNames = [];
+      action.payload.forEach(doc => {
+        listNames.push(doc.id);
+      });
+      console.log(listNames);
+      return {...state, lists: listNames};
     default:
       return state;
   }
