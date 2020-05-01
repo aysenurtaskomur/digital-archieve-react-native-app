@@ -41,15 +41,8 @@ export const getList = () => {
       .collection('users')
       .doc(user.uid)
       .collection('Listeler')
-      .get()
-      .then((querySnapshot) =>  {
-        // var listNames = [];
-        // querySnapshot.forEach(doc => { 
-        //   listNames.push(doc.id);
-        //   console.log(listNames)
-        // })
+      .onSnapshot((querySnapshot) =>  {
         dispatch({type: actionTypes.GET_LIST, payload: querySnapshot});
       })
-      .catch(error=>{console.log(error)})
   };
 };

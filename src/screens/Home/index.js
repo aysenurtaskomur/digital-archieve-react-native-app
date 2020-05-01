@@ -5,7 +5,7 @@ import {
   Text,
   Modal,
   StyleSheet,
-  TouchableHighlight,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import ListBox from '../../components/listBox';
 import InputComp from '../../components/input';
@@ -16,8 +16,7 @@ import {connect} from 'react-redux';
 import {createList} from '../../redux/actions/listActions';
 const windowWidth = Dimensions.get('window').width;
 
-function Home({navigation,...props}) {
- 
+function Home({navigation, ...props}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [listeAdi, setListeAdi] = useState('');
 
@@ -28,7 +27,6 @@ function Home({navigation,...props}) {
       }
     });
   }, []);
-
 
   function addList(listeAdi) {
     props.createList(listeAdi);
@@ -50,8 +48,11 @@ function Home({navigation,...props}) {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
+          {
+            setModalVisible(!modalVisible);
+          }
         }}>
+      <TouchableWithoutFeedback onPress={() =>  {setModalVisible(!modalVisible)}}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <InputComp
@@ -66,12 +67,14 @@ function Home({navigation,...props}) {
             <ButtonComp
               title="Oluştur"
               onPress={() => {
-               addList(listeAdi);
+                addList(listeAdi);
               }}
             />
           </View>
-        </View>
+        </View> 
+        </TouchableWithoutFeedback>
       </Modal>
+     
     </View>
   );
 }
@@ -129,8 +132,6 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 });
-
-
 
 export default connect(
   null,
