@@ -21,6 +21,7 @@ import ReduxThunk from 'redux-thunk';
 import reducers from './src/redux/reducers/index';
 import initialState from './src/redux/reducers/initialState';
 import Images from './src/themes/images';
+
 import {decode, encode} from 'base-64';
 import {YellowBox} from 'react-native';
 import _ from 'lodash';
@@ -48,7 +49,7 @@ if (!global.atob) {
   global.atob = decode;
 }
 
-export function mainNavigator() {
+export function MainNavigator() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -106,7 +107,11 @@ function HomeStackScreen() {
 function ProfileStackScreen() {
   return (
     <ProfileStack.Navigator>
-      <ProfileStack.Screen name="Profile" options={{ headerShown:false}} component={Profile} />
+      <ProfileStack.Screen
+        name="Profile"
+        options={{headerShown: false}}
+        component={Profile}
+      />
     </ProfileStack.Navigator>
   );
 }
@@ -114,7 +119,11 @@ function ProfileStackScreen() {
 function SearchStackScreen() {
   return (
     <SearchStack.Navigator>
-      <SearchStack.Screen name="Search" options={{ headerShown:false}} component={Search} />
+      <SearchStack.Screen
+        name="Search"
+        options={{headerShown: false}}
+        component={Search}
+      />
     </SearchStack.Navigator>
   );
 }
@@ -122,7 +131,11 @@ function SearchStackScreen() {
 function CalendarStackScreen() {
   return (
     <CalendarStack.Navigator>
-      <CalendarStack.Screen name="Calendar" options={{ headerShown:false}} component={Calendar} />
+      <CalendarStack.Screen
+        name="Calendar"
+        options={{headerShown: false}}
+        component={Calendar}
+      />
     </CalendarStack.Navigator>
   );
 }
@@ -130,26 +143,20 @@ function CalendarStackScreen() {
 function AddLinkStackScreen() {
   return (
     <AddLinkStack.Navigator>
-      <AddLinkStack.Screen  name="AddLink" options={{ headerShown:false}}  component={AddLink} />
+      <AddLinkStack.Screen
+        name="AddLink"
+        options={{headerShown: false}}
+        component={AddLink}
+      />
     </AddLinkStack.Navigator>
   );
 }
 
 export default function App(props) {
   const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
-  // const [count, setCount] = useState('');
-
-  useEffect(() => {
-    if (props) {
-      initialState.receivedLink = props.url;
-    }
-
-    // setCount(props.url);
-    // console.log(count);
-  });
 
   return (
-    <Provider value={initialState.link} store={store}>
+    <Provider store={store}>
       <NavigationContainer>
         <MainStack.Navigator initialRouteName="SplashPage">
           <MainStack.Screen
@@ -157,6 +164,9 @@ export default function App(props) {
             component={SplashPage}
             options={{
               headerShown: false,
+            }}
+            initialParams={{
+              extraData: props.url,
             }}
           />
           <MainStack.Screen
@@ -182,7 +192,7 @@ export default function App(props) {
           />
           <MainStack.Screen
             name="MainNavigator"
-            component={mainNavigator}
+            component={MainNavigator}
             options={{
               headerShown: false,
             }}

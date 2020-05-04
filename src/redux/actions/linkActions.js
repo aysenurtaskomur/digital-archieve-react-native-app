@@ -4,7 +4,7 @@ import firebase from 'firebase';
 
 
 export const saveLink = () => {
-  return{
-  
+  return dispatch =>{
+    console.log("1savelinkaction");
   }
 }

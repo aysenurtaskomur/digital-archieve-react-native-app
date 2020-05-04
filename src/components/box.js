@@ -19,7 +19,6 @@ const windowHeight = Dimensions.get('window').height;
 const box = ({navigation, title,...props}) => {
 
   useEffect(() => {
-    console.log("use effect");
     props.getList();
     
   },[]);
@@ -113,7 +112,6 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  console.log("————-",  state.ListReducer.lists);
   return{
     currentLists: state.ListReducer.lists,
   }

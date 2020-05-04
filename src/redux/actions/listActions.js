@@ -5,9 +5,6 @@ import initialState from '../../redux/reducers/initialState';
 export const createList = listName => {
   console.log('console1: ' + listName);
   const user = firebase.auth().currentUser;
-  // var arr=[];
-  // var obj = {name: listName, code: '#d35400'};
-  // var assign = arr.push(obj);
   return dispatch => {
     return dispatch({
       type: actionTypes.CREATE_LIST,
@@ -21,9 +18,7 @@ export const createList = listName => {
           liste: 'dfdfdd',
         })
         .then(() => {
-          console.log('console2: ' + listName);
           dispatch({type: actionTypes.CREATE_LIST});
-          console.log('console3: ' + listName);
         })
         .catch(error => {
           console.log(error);

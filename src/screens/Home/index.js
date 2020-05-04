@@ -16,7 +16,7 @@ import {connect} from 'react-redux';
 import {createList} from '../../redux/actions/listActions';
 const windowWidth = Dimensions.get('window').width;
 
-function Home({navigation, ...props}) {
+function Home({navigation, value, ...props}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [listeAdi, setListeAdi] = useState('');
 
@@ -24,6 +24,7 @@ function Home({navigation, ...props}) {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         console.log(user.email);
+      
       }
     });
   }, []);
@@ -75,6 +76,7 @@ function Home({navigation, ...props}) {
         </TouchableWithoutFeedback>
       </Modal>
      
+     <Text>{props.value}</Text>
     </View>
   );
 }

@@ -3,7 +3,6 @@ import firebase from 'firebase';
 import {CommonActions} from '@react-navigation/native';
 
 export const signUp = (email, password, navigation) => {
-  
   return dispatch => {
     dispatch({type: actionTypes.LOGIN_LOADING});
 
@@ -27,11 +26,30 @@ export const signUp = (email, password, navigation) => {
               .collection('users')
               .doc(user.uid)
               .set({
-                dfdfg: 'dfgf',
+                fullname: 'dfgf',
               })
               .then(() => {
-                console.log('yazildi');
+               
+                firebase
+                  .firestore()
+                  .collection('users')
+                  .doc(user.uid)
+                  .collection('Listeler')
+                  .doc('Tüm Kayıtlarım')
+                  .set({
+                    sdfsdf : 'dfdfs'
+                  })
+                  .then(() => {
+                    console.log('yazildi');
+                  });
               });
+            // firebase
+            //   .firestore()
+            //   .collection('users')
+            //   .doc(user.uid)
+            //   .collection('Listeler')
+            //   .doc('Tüm Kayıtlarım')
+            //   .then(()=>{console.log("ass")});
           }
         });
       })

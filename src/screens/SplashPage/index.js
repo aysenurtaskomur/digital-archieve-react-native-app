@@ -1,25 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import firebase from 'firebase';
-import {CommonActions,} from '@react-navigation/native';
-import initialState from '../../redux/reducers/initialState';
+import {CommonActions} from '@react-navigation/native';
 
-export default function SplashPage({navigation}) {
+export default function SplashPage({navigation, ...props}) {
   React.useEffect(() => {
     //console.log("Splash Effect");
     //firebase.auth().signOut();
     setTimeout(() => {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          if (initialState.receivedLink == null) {
-              navigation.dispatch(
-               CommonActions.reset({
+          if (props.route.params.extraData == null) {
+            navigation.dispatch(
+              CommonActions.reset({
                 index: 1,
-                routes: [
-                  {name: 'MainNavigator'},
-                ],
-               }),
-             );
+                routes: [{name: 'MainNavigator'}],
+              }),
+            );
           } else {
             // navigation.dispatch(
             //   CommonActions.reset({
@@ -31,7 +28,10 @@ export default function SplashPage({navigation}) {
             //   }),
             // );
 
-          navigation.navigate('MainNavigator',{screen: 'AddLink'},);
+            navigation.navigate('MainNavigator', {
+              screen: 'AddLink',
+              params: {link: 'test'},
+            });
           }
         } else {
           navigation.navigate('Login');

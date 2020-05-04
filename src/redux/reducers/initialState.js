@@ -2,7 +2,7 @@ export default {
   user: null,
   error: '',
   loading: false,
-  receivedLink: '',
+  //receivedLink: '',
   links: [],
   listName: '',
   lists: []
