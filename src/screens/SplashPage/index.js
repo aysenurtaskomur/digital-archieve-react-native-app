@@ -30,7 +30,7 @@ export default function SplashPage({navigation, ...props}) {
 
             navigation.navigate('MainNavigator', {
               screen: 'AddLink',
-              params: {link: 'test'},
+              params: {link: props.route.params.extraData},
             });
           }
         } else {

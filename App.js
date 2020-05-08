@@ -19,7 +19,6 @@ import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import reducers from './src/redux/reducers/index';
-import initialState from './src/redux/reducers/initialState';
 import Images from './src/themes/images';
 
 import {decode, encode} from 'base-64';
@@ -49,7 +48,8 @@ if (!global.atob) {
   global.atob = decode;
 }
 
-export function MainNavigator() {
+export function MainNavigator(props) {
+console.log("mainnavigator: ",props.route.params.extraData)
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -78,11 +78,11 @@ export function MainNavigator() {
         activeTintColor: 'grey',
         inactiveTintColor: 'gray',
       }}>
-      <Tab.Screen name="Calendar" component={CalendarStackScreen} />
-      <Tab.Screen name="AddLink" component={AddLinkStackScreen} />
+      <Tab.Screen name="Calendar" component={Calendar} />
+      <Tab.Screen name="AddLink" initialParams={{data:props.route.params.extraData }} component={AddLink} />
       <Tab.Screen name="Home" component={HomeStackScreen} />
-      <Tab.Screen name="Search" component={SearchStackScreen} />
-      <Tab.Screen name="Profile" component={ProfileStackScreen} />
+      <Tab.Screen name="Search" component={Search} />
+      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 }
@@ -104,53 +104,53 @@ function HomeStackScreen() {
   );
 }
 
-function ProfileStackScreen() {
-  return (
-    <ProfileStack.Navigator>
-      <ProfileStack.Screen
-        name="Profile"
-        options={{headerShown: false}}
-        component={Profile}
-      />
-    </ProfileStack.Navigator>
-  );
-}
+// function ProfileStackScreen() {
+//   return (
+//     <ProfileStack.Navigator>
+//       <ProfileStack.Screen
+//         name="Profile"
+//         options={{headerShown: false}}
+//         component={Profile}
+//       />
+//     </ProfileStack.Navigator>
+//   );
+// }
 
-function SearchStackScreen() {
-  return (
-    <SearchStack.Navigator>
-      <SearchStack.Screen
-        name="Search"
-        options={{headerShown: false}}
-        component={Search}
-      />
-    </SearchStack.Navigator>
-  );
-}
+// function SearchStackScreen() {
+//   return (
+//     <SearchStack.Navigator>
+//       <SearchStack.Screen
+//         name="Search"
+//         options={{headerShown: false}}
+//         component={Search}
+//       />
+//     </SearchStack.Navigator>
+//   );
+// }
 
-function CalendarStackScreen() {
-  return (
-    <CalendarStack.Navigator>
-      <CalendarStack.Screen
-        name="Calendar"
-        options={{headerShown: false}}
-        component={Calendar}
-      />
-    </CalendarStack.Navigator>
-  );
-}
+// function CalendarStackScreen() {
+//   return (
+//     <CalendarStack.Navigator>
+//       <CalendarStack.Screen
+//         name="Calendar"
+//         options={{headerShown: false}}
+//         component={Calendar}
+//       />
+//     </CalendarStack.Navigator>
+//   );
+// }
 
-function AddLinkStackScreen() {
-  return (
-    <AddLinkStack.Navigator>
-      <AddLinkStack.Screen
-        name="AddLink"
-        options={{headerShown: false}}
-        component={AddLink}
-      />
-    </AddLinkStack.Navigator>
-  );
-}
+// function AddLinkStackScreen() {
+//   return (
+//     <AddLinkStack.Navigator>
+//       <AddLinkStack.Screen
+//         name="AddLinkPage"
+//         options={{headerShown: false}}
+//         component={AddLink}
+//       />
+//     </AddLinkStack.Navigator>
+//   );
+// }
 
 export default function App(props) {
   const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
@@ -196,7 +196,11 @@ export default function App(props) {
             options={{
               headerShown: false,
             }}
+            initialParams={{
+              extraData: props.url,
+            }}
           />
+       
         </MainStack.Navigator>
       </NavigationContainer>
     </Provider>

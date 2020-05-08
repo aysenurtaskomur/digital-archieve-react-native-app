@@ -2,8 +2,7 @@ export default {
   user: null,
   error: '',
   loading: false,
-  //receivedLink: '',
   links: [],
-  listName: '',
+  listName: '', //modalda aldigin seyi buna ata sonra icini bosalt
   lists: []
 }

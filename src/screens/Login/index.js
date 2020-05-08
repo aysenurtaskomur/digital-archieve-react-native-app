@@ -25,15 +25,9 @@ function Login({signIn, navigation, error, loading}) {
       if (user) {
        //navigation.navigate('MainNavigator', {screen: 'Home'});
        //console.log(user.email)
-
-       
-      
       }
     });
   }, []);
-
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
 
   const errorMsg = error ? <Text style={styles.errorText}>{error}</Text> : null;
 

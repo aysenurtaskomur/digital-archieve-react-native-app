@@ -6,25 +6,20 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import CardView from 'react-native-cardview';
 import {ScreenContainer} from 'react-native-screens';
-import {FlatGrid, SectionGrid} from 'react-native-super-grid';
+import {FlatGrid} from 'react-native-super-grid';
 
 import {connect} from 'react-redux';
 import {getList} from '../redux/actions/listActions';
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+const {windowWidth,windowHeight} = Dimensions.get('window');
 
-const box = ({navigation, title,...props}) => {
-
+const box = ({navigation, title, ...props}) => {
   useEffect(() => {
     props.getList();
-    
-  },[]);
+  }, []);
 
-
-  let items = props.currentLists.map(item=> ({name: item, code:'#3498db' }))
+  let items = props.currentLists.map(item => ({name: item, code: '#3498db'}));
 
   // const items = [
   //   {name: 'TURQUOISE', code: '#1abc9c'},
@@ -68,7 +63,6 @@ const box = ({navigation, title,...props}) => {
           <TouchableOpacity
             style={[styles.itemContainer, {backgroundColor: item.code}]}
             onPress={() => {
-              
               navigation.navigate('ListDetail');
             }}>
             <View>
@@ -111,11 +105,11 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapStateToProps(state) {
-  return{
+mapStateToProps = state => {
+  return {
     currentLists: state.ListReducer.lists,
-  }
-}
+  };
+};
 
 export default connect(
   mapStateToProps,
