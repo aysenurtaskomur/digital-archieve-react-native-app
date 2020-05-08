@@ -26,111 +26,60 @@ console.warn = message => {
 };
 
 function AddLink({navigation, ...props}) {
-  // const [link, setLink] = useState('www.instagram.com');
+  const [link, setLink] = useState('');
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        console.log('addlink: ', props.route);
-        console.log(initialState.links)
-      }
-    });
+    props.route.params.data === null
+      ? setLink('')
+      : setLink(props.route.params.data);
+
+    console.log('addlink: ', props.route);
+    console.log("aaa")
+    props.getList();
+    console.log('listdeneme : ', props.listNames);
+  }, []);
+
+  const [list, setList] = useState(props.listNames[0]);
+  useEffect(() => {
+    console.log("bb")
+
   }, []);
 
   let data = props.listNames.map(items => ({value: items}));
 
   return (
     <View style={styles.container}>
-      <Formik
-        initialValues={{link: '', list: ''}}
-        validationSchema={Yup.object().shape({
-          link: Yup.string()
-            .email('Geçersiz Format')
-            .required('Email alanı zorunlu'),
-          list: Yup.string()
-            .min(8, 'Şifre en az 8 karakter olmalı')
-            .required('Şifre alanı zorunlu'),
-        })}
-        // onSubmit={values => {
-        //   handleSubmit(values);
-        // }}
-      >
-        {({
-          values,
-          handleChange,
-          handleSubmit,
-          errors,
-          touched,
-          setFieldTouched,
-        }) => (
-          <React.Fragment>
-            {/* sadece link verilebilmeli */}
-            <InputComp
-              placeholder="Kayıt Ekle"
-              value={
-                props.route.params.data === null
-                  ? values.link
-                  : props.route.params.data
-              }
-              onChangeText={handleChange('link')}
-            />
+      {/* sadece link verilebilmeli */}
+      <InputComp
+        placeholder="Kayıt Ekle"
+        value={link}
+        onChangeText={value => {
+          setLink(value);
+        }}
+      />
 
-            <Dropdown
-              // containerStyle={{
-              //   width: 250,
-              //   borderRadius: 20,
-              //   backgroundColor: 'yellow',
-              //   borderBottomWidth: 1,
-              // elevation: 6,
-              // shadowOffset: {width: 5, height: 5},
-              // shadowColor: 'grey',
-              // shadowOpacity: 0.5,
-              // shadowRadius: 10,
-              // margin: 10,
-              // height: 50
-              // }}
-              pickerStyle={{
-                width: 300,
-                borderRadius: 20,
-                backgroundColor: 'white',
-                borderBottomWidth: 0,
-                elevation: 6,
-                shadowOffset: {width: 5, height: 5},
-                shadowColor: 'red',
-                shadowOpacity: 0.5,
-                shadowRadius: 10,
-                margin: 10,
-              }}
-              inputContainerStyle={{
-                width: 300,
-                borderRadius: 20,
-                backgroundColor: 'white',
-                borderBottomWidth: 1,
-                elevation: 6,
-                shadowOffset: {width: 5, height: 5},
-                shadowColor: 'grey',
-                shadowOpacity: 0.5,
-                shadowRadius: 10,
-                margin: 10,
-                height: 50,
-                paddingHorizontal: 10,
-              }}
-              dropdownOffset={{top: 12}}
-              rippleCentered={true}
-              data={data}
-              onChangeText={handleChange('list')}
-              value={values.list}
-            />
+      <Dropdown
+        pickerStyle={styles.dropdownStyle}
+        inputContainerStyle={[
+          styles.dropdownStyle,
+          {height: 50, paddingHorizontal: 10},
+        ]}
+        dropdownOffset={{top: 12, left: 5}}
+        rippleCentered={true}
+        data={data}
+        onChangeText={value => {
+          setList(value);
+        }}
+        value={list}
+        //default tüm kayıtlar secili olsun
+      />
 
-            <ButtonComp
-              title="Ekle"
-              onPress={() => {
-                props.saveLink(values.link, values.list, data);
-              }}
-            />
-          </React.Fragment>
-        )}
-      </Formik>
+      <ButtonComp
+        title="Ekle"
+        onPress={() => {
+          props.saveLink(link, list);
+        }}
+      />
     </View>
   );
 }
@@ -142,12 +91,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  dropdownStyle: {
+    width: 300,
+    borderRadius: 20,
+    backgroundColor: 'white',
+    borderBottomWidth: 0,
+    elevation: 6,
+    shadowOffset: {width: 5, height: 5},
+    shadowColor: 'red',
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    margin: 10,
+  },
 });
 
 const mapStateToProps = state => {
   return {
     listNames: state.ListReducer.lists,
-    
   };
 };
 export default connect(

@@ -13,8 +13,8 @@ export const saveLink = (link, list ) => {
     .doc(list)
     .collection('Kayıtlar')
     .add({
-      linkornek : link
-    })
+      link: link
+    }) 
     .then(()=>{
       dispatch({type:actionTypes.SAVE_LINK , payload: link})
     })

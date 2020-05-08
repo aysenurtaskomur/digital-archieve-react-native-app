@@ -30,7 +30,6 @@ export const createList = listName => {
 export const getList = () => {
   const user = firebase.auth().currentUser;
   return dispatch => {
-    console.log('actions');
     firebase
       .firestore()
       .collection('users')
