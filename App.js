@@ -49,7 +49,7 @@ if (!global.atob) {
 }
 
 export function MainNavigator(props) {
-console.log("mainnavigator: ",props.route.params.extraData)
+// console.log("mainnavigator: ",props.route.params.extraData)
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -97,7 +97,6 @@ function HomeStackScreen() {
       />
       <HomeStack.Screen
         name={'ListDetail'}
-        options={{headerShown: false}}
         component={ListDetail}
       />
     </HomeStack.Navigator>

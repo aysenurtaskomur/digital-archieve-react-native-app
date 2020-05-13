@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useEffect} from 'react';
 import {
   Text,
   View,
@@ -6,32 +6,21 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import {Card, CardItem, Body} from 'native-base';
-import initialState from '../../redux/reducers/initialState';
-import LinkCard from '../../components/linkCard'
+import LinkCard from '../../components/linkCard';
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-
-
-export default class ListDetail extends Component {
-// componentDidMount(){
-//   console.log(initialState.listName)
-// }  
-  render() {
-
-    return (
+export default function ListDetail({route, ...props}) {
+  return (
+    <ScrollView>
       <View style={styles.context}>
-        <LinkCard/>
+        <LinkCard name={route.params.name} />
       </View>
-      
-      
-    );
-  }
+    </ScrollView>
+  );
 }
- 
+
 const styles = StyleSheet.create({
   context: {
     justifyContent: 'center',
@@ -39,4 +28,3 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
-

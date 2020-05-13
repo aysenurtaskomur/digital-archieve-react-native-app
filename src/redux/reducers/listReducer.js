@@ -9,6 +9,7 @@ export default (state = initialState, action) => {
       var listNames = [];
       action.payload.forEach(doc => {
         listNames.push(doc.id);
+        console.log("getlist: ",doc.id)
       });
       return {...state, lists: listNames};
     default:
