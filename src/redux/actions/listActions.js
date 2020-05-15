@@ -3,7 +3,6 @@ import firebase from 'firebase';
 import initialState from '../../redux/reducers/initialState';
 
 export const createList = listName => {
-  console.log('console1: ' + listName);
   const user = firebase.auth().currentUser;
   return dispatch => {
     return dispatch({

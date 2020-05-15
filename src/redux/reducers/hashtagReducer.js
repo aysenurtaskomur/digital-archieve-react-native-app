@@ -3,14 +3,9 @@ import initialState from './initialState';
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.CREATE_LIST:
+    case actionTypes.GET_HASHTAG:
+      console.log("get hashtag reducer ", action.payload)
       return {...state};
-    case actionTypes.GET_LIST:
-      var listNames = [];
-      action.payload.forEach(doc => {
-        listNames.push(doc.id);
-      });
-      return {...state, lists: listNames};
     default:
       return state;
   }

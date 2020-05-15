@@ -33,10 +33,6 @@ console.warn = message => {
   }
 };
 const HomeStack = createStackNavigator();
-const ProfileStack = createStackNavigator();
-const SearchStack = createStackNavigator();
-const CalendarStack = createStackNavigator();
-const AddLinkStack = createStackNavigator();
 const MainStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -98,58 +94,12 @@ function HomeStackScreen() {
       <HomeStack.Screen
         name={'ListDetail'}
         component={ListDetail}
+        options={{title:null}}
       />
     </HomeStack.Navigator>
   );
 }
 
-// function ProfileStackScreen() {
-//   return (
-//     <ProfileStack.Navigator>
-//       <ProfileStack.Screen
-//         name="Profile"
-//         options={{headerShown: false}}
-//         component={Profile}
-//       />
-//     </ProfileStack.Navigator>
-//   );
-// }
-
-// function SearchStackScreen() {
-//   return (
-//     <SearchStack.Navigator>
-//       <SearchStack.Screen
-//         name="Search"
-//         options={{headerShown: false}}
-//         component={Search}
-//       />
-//     </SearchStack.Navigator>
-//   );
-// }
-
-// function CalendarStackScreen() {
-//   return (
-//     <CalendarStack.Navigator>
-//       <CalendarStack.Screen
-//         name="Calendar"
-//         options={{headerShown: false}}
-//         component={Calendar}
-//       />
-//     </CalendarStack.Navigator>
-//   );
-// }
-
-// function AddLinkStackScreen() {
-//   return (
-//     <AddLinkStack.Navigator>
-//       <AddLinkStack.Screen
-//         name="AddLinkPage"
-//         options={{headerShown: false}}
-//         component={AddLink}
-//       />
-//     </AddLinkStack.Navigator>
-//   );
-// }
 
 export default function App(props) {
   const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));

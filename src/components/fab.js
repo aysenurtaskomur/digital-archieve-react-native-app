@@ -12,7 +12,7 @@ const actionButton = ({onPress}) => {
       active={'true'}
       direction="up"
       containerStyle={{flex: 1}}
-      style={{backgroundColor: 'grey'}}
+      style={{backgroundColor: 'orange'}}
       position="bottomRight"
       onPress={onPress}>
       <Icons name={iconName} />

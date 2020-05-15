@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Image, Text} from 'react-native';
 import InputComp from '../../components/input';
 import ButtonComp from '../../components/button';
 import Images from '../../themes/images';
@@ -7,6 +7,7 @@ import {Dropdown} from 'react-native-material-dropdown';
 import {connect} from 'react-redux';
 import {saveLink} from '../../redux/actions/linkActions';
 import {getList} from '../../redux/actions/listActions';
+import {getHashtag} from '../../redux/actions/hashtagActions';
 import {windowWidth, windowHeight} from '../../themes/constants';
 
 function AddLink({navigation, ...props}) {
@@ -82,11 +83,11 @@ function AddLink({navigation, ...props}) {
         <ButtonComp
           title="Ekle"
           onPress={() => {
-            console.log(hashtag);
-            props.saveLink(link, list,hashtag );
+            props.saveLink(link, list, hashtag);
           }}
         />
       </View>
+      <Text> {props.hashtags}</Text>
     </View>
   );
 }

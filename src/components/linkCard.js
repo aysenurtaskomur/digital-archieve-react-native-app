@@ -9,11 +9,12 @@ import {windowWidth, windowHeight} from '../themes/constants';
 const linkCard = ({name, ...props}) => {
   useEffect(() => {
     props.getLink(name);
+    console.log(props.linkInfo)
   }, []);
 
   return (
     <View style={{flex: 1}}>
-      {props.links.map((item, key) => (
+      {props.linkInfo.map((item, key) => (
         <View key={key}>
           <CardView
             cardElevation={7}
@@ -21,12 +22,12 @@ const linkCard = ({name, ...props}) => {
             cornerRadius={15}
             style={styles.cardLink}>
             <View style={{flex: 2}}>
-              <TouchableOpacity onPress={() => Linking.openURL(item)}>
-                <Text style={{fontSize: 20, color: 'black'}}>{item}</Text>
+              <TouchableOpacity onPress={() => Linking.openURL(item.link)}>
+                <Text style={{fontSize: 20, color: 'black'}}>{item.link}</Text>
               </TouchableOpacity>
             </View>
             <View style={{flex: 2}}>
-              <HashtagBox />
+              <HashtagBox data={item.hashtag} />
             </View>
           </CardView>
         </View>
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
   cardLink: {
     // marginTop: height/3,
     paddingTop: 20,
-    paddingLeft: 15,
+    paddingHorizontal: 15,
     backgroundColor: 'white',
     width: windowWidth - 30,
     height: windowHeight / 6,
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    links: state.LinkReducer.links,
+    linkInfo: state.LinkReducer.linkInformation,
   };
 };
 

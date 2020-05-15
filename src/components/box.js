@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     currentLists: state.ListReducer.lists,
-    links : state.LinkReducer.links
   };
 };
 

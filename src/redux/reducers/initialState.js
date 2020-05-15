@@ -2,7 +2,9 @@ export default {
   user: null,
   error: '',
   loading: false,
-  links: [],
+  // links: [],
+  linkInformation:[],
   listName: '', //modalda aldigin seyi buna ata sonra icini bosalt
-  lists: []
+  lists: [],
+  hashtagArray:[]
 }

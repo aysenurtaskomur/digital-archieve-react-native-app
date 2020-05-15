@@ -5,12 +5,13 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SAVE_LINK:
       return {...state};
+      
     case actionTypes.GET_LIST:
-      var linkNames = [];
+      var informationArr = []; 
       action.payload.forEach(doc => {
-        linkNames.push(doc.data().link);
+        informationArr.push(doc.data());
       });
-      return {...state, links: linkNames};
+      return {...state, linkInformation: informationArr};
     default:
       return state;
   }
