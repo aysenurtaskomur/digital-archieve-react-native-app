@@ -7,18 +7,24 @@ export const saveLink = (link, list,hashtag) => {
  
   var newLink = link.replace(new RegExp("/","g"),"-");
   var Ref= firebase.firestore().collection('users').doc(user.uid).collection('Listeler').doc(list).collection('Kayıtlar').doc(newLink);
-   console.log("saveLink actions ",newLink)
-  console.log("saveLink actions ",link)
+  var Ref2 = firebase.firestore().collection('users').doc(user.uid);
   return dispatch => {
      Ref.set({
       link: link,
       hashtag: firebase.firestore.FieldValue.arrayUnion(hashtag)},
       {merge: true})
     .then(()=>{
-      dispatch({type:actionTypes.SAVE_LINK , payload: link})
-    })
+      Ref2.set({
+        allhashtag: firebase.firestore.FieldValue.arrayUnion(hashtag)},
+        {merge: true})
+        .then(()=>{
+        dispatch({type:actionTypes.SAVE_LINK , payload: link})
+      })
+      })
+      
+      
+    }
   }
-}
 
 export const getLink = (listName) =>{
    const user = firebase.auth().currentUser;

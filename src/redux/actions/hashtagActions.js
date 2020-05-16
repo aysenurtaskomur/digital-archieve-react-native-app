@@ -1,24 +1,16 @@
 import * as actionTypes from './actionTypes';
 import * as firebase from 'firebase';
 
-export const getHashtag = (link, list, hashtag) => {
+export const getAllHashtag = () => {
   const user = firebase.auth().currentUser;
-  console.log("gethashtag actions ",link)
-  console.log("gethashtag actions ",list)
-  console.log("gethashtag actions ",hashtag)
+  console.log('getallhashtag');
   return dispatch => {
-   firebase
-    .firestore()
-    .collection('users')
-    .doc(user.uid)
-    .collection('Listeler')
-    .doc(list)
-    .collection('Kayıtlar')
-    .doc(link)
-    .onSnapshot(doc=> {
-      dispatch({type:actionTypes.GET_HASHTAG,payload:doc.data().hashtag})
-       
-    })
+    firebase
+      .firestore()
+      .collection('users')
+      .doc(user.uid)
+      .onSnapshot(doc => {
+        dispatch({type: actionTypes.GET_ALLHASHTAG, payload:doc.data().allhashtag })
+      });
   };
-  
 };

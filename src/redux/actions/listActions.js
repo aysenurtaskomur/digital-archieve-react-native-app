@@ -1,6 +1,5 @@
 import * as actionTypes from './actionTypes';
 import firebase from 'firebase';
-import initialState from '../../redux/reducers/initialState';
 
 export const createList = listName => {
   const user = firebase.auth().currentUser;
