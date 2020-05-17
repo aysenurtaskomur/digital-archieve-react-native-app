@@ -2,22 +2,23 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import {connect} from 'react-redux';
-import {getAllHashtag} from '../../redux/actions/hashtagActions';
-import LinkCard from "../../components/linkCard";
+import {getAllHashtag,searchAllLinks} from '../../redux/actions/hashtagActions';
+import LinkCard from '../../components/linkCard';
 
 const Search = props => {
   const [search, setSearch] = useState('');
   const [dataSource, setdataSource] = useState('');
   useEffect(() => {
-     props.getAllHashtag();
+    props.getAllHashtag();
+    props.searchAllLinks();
   }, []);
 
-  const searchFilterFunction = (text) => {
-    const newData = props.allHashtag.filter(item=>{
+  const searchFilterFunction = text => {
+    const newData = props.allHashtag.filter(item => {
       const itemData = item ? item.toUpperCase() : ''.toUpperCase();
       const textData = text.toUpperCase();
       return itemData.indexOf(textData) > -1;
-    })
+    });
 
     setSearch(text);
     setdataSource(newData);
@@ -27,15 +28,27 @@ const Search = props => {
     <View>
       <SearchBar
         placeholder="Type Here..."
-        onChangeText={(value)=>{searchFilterFunction(value)}}
+        onChangeText={value => {
+          searchFilterFunction(value);
+        }}
         value={search}
       />
-      
+
+      {/* {props.allList.map(listname => {
+        <FlatList
+          data={dataSource}
+          renderItem={({item}) => <LinkCard name={listname} />}
+          keyExtractor={item => item.id}
+        />;
+      })} */}
+
+
       <FlatList
-        data={dataSource}
-        renderItem={({ item }) => <Text>{item}</Text>}
-        keyExtractor={item => item.id}
-      />
+          data={dataSource}
+          renderItem={({item}) => <LinkCard name={"Instagram"}/>}
+          keyExtractor={item => item.id}
+        />
+
 
 
     </View>
@@ -44,11 +57,12 @@ const Search = props => {
 
 const mapStateToProps = state => {
   return {
-    allHashtag : state.HashtagReducer.hashtagAll,
+    allHashtag: state.HashtagReducer.hashtagAll,
+    allList: state.ListReducer.lists,
   };
 };
 
 export default connect(
   mapStateToProps,
-  {getAllHashtag},
+  {getAllHashtag,searchAllLinks},
 )(Search);

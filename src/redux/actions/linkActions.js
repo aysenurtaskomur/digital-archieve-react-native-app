@@ -21,8 +21,6 @@ export const saveLink = (link, list,hashtag) => {
         dispatch({type:actionTypes.SAVE_LINK , payload: link})
       })
       })
-      
-      
     }
   }
 

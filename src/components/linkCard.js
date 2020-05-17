@@ -5,11 +5,12 @@ import HashtagBox from './hashtagBox';
 import {getLink} from '../redux/actions/linkActions';
 import {connect} from 'react-redux';
 import {windowWidth, windowHeight} from '../themes/constants';
+import {getAllHashtag,searchAllLinks} from '../redux/actions/hashtagActions';
 
 const linkCard = ({name, ...props}) => {
   useEffect(() => {
-    props.getLink(name);
-    console.log(props.linkInfo)
+    console.log("k: ", name)
+    props.getLink("bbb ",name);
   }, []);
 
   return (
@@ -56,5 +57,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  {getLink},
+  {getLink,searchAllLinks},
 )(linkCard);
