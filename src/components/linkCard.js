@@ -5,12 +5,12 @@ import HashtagBox from './hashtagBox';
 import {getLink} from '../redux/actions/linkActions';
 import {connect} from 'react-redux';
 import {windowWidth, windowHeight} from '../themes/constants';
-import {getAllHashtag,searchAllLinks} from '../redux/actions/hashtagActions';
+import {getAllHashtag, searchAllLinks} from '../redux/actions/hashtagActions';
 
 const linkCard = ({name, ...props}) => {
   useEffect(() => {
-    console.log("k: ", name)
-    props.getLink("bbb ",name);
+    console.log('k: ', name);
+    props.getLink(name);
   }, []);
 
   return (
@@ -27,8 +27,15 @@ const linkCard = ({name, ...props}) => {
                 <Text style={{fontSize: 20, color: 'black'}}>{item.link}</Text>
               </TouchableOpacity>
             </View>
-            <View style={{flex: 2}}>
-              <HashtagBox data={item.hashtag} />
+            <View style={{flex: 2, flexDirection: 'row'}}>
+              {/* <HashtagBox data={item.hashtag} /> */}
+              {item.hashtag
+                ? item.hashtag.map((hash, index) => (
+                    <View key={index} style={styles.outline}>
+                      <Text style={{fontSize: 15}}>{hash} </Text>
+                    </View>
+                  ))
+                : null}
             </View>
           </CardView>
         </View>
@@ -47,6 +54,18 @@ const styles = StyleSheet.create({
     height: windowHeight / 6,
     marginBottom: 15,
   },
+  outline: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 50,
+    borderColor: 'orange',
+    borderWidth: 2,
+    // width: 100,
+    // height: 35,
+    marginRight: 7,
+    marginBottom: 8,
+    padding: 12,
+  },
 });
 
 const mapStateToProps = state => {
@@ -57,5 +76,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  {getLink,searchAllLinks},
+  {getLink, searchAllLinks},
 )(linkCard);

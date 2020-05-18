@@ -3,7 +3,6 @@ import * as firebase from 'firebase';
 
 export const getAllHashtag = () => {
   const user = firebase.auth().currentUser;
-  console.log('getallhashtag');
   return dispatch => {
     firebase
       .firestore()
@@ -18,11 +17,10 @@ export const getAllHashtag = () => {
   };
 };
 
-export const searchAllLinks = () => {
+export const searchAllLinks = (data) => {
   const user = firebase.auth().currentUser;
-
+  var dizi=[];
   return dispatch => {
-    console.log("asas")
     firebase
       .firestore()
       .collection('users')
@@ -31,10 +29,10 @@ export const searchAllLinks = () => {
       .onSnapshot(querySnapshot => {
         var documents = [];
         querySnapshot.forEach(doc => {
-          documents.push(doc.id);
-         
+           documents.push(doc.id);
+          // doc.id.forEach(()=>{console.log("oldu")})
         });
-        documents.map(i => {
+        documents.forEach(i => {
           firebase
             .firestore()
             .collection('users')
@@ -42,19 +40,25 @@ export const searchAllLinks = () => {
             .collection('Listeler')
             .doc(i)
             .collection('Kayıtlar')
-            .onSnapshot(querySnapshot=>{
-              var x=[];
-              querySnapshot.forEach(doc=>{
-                x.push(doc.data().hashtag);
-                // console.log("aaaa: ",doc.data().hashtag)
-              })
-              console.log("e :", x)
-
-
-
+            // .where("hashtag", "array-contains", data)
+            .get()
+            .then(querySnapshot=>{
+                
+                querySnapshot.forEach(doc => {
+                  dizi.push(doc.data());
+                
+                });
+                // console.log("hashtag reducer=> ", dizi);
+                dispatch({type:actionTypes.GET_MATCH_HASHTAG,payload:dizi})
+           
+            })
+            .then(()=>{
               
             })
         });
+
+
+
       });
   };
 };

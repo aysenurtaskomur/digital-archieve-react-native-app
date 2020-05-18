@@ -11,6 +11,7 @@ export default (state = initialState, action) => {
       action.payload.forEach(doc => {
         informationArr.push(doc.data());
       });
+      // console.log("getlink reducer: ", informationArr)
       return {...state, linkInformation: informationArr};
     default:
       return state;

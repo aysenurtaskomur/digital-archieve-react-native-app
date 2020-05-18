@@ -20,13 +20,7 @@ function Home({navigation, value, ...props}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [listeAdi, setListeAdi] = useState('');
 
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        console.log(user.email);
-      }
-    });
-  }, []);
+  
 
   function addList(listeAdi) {
     props.createList(listeAdi);

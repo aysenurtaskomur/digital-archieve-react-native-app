@@ -12,6 +12,9 @@ import {Card, CardItem, Body} from 'native-base';
 import LinkCard from '../../components/linkCard';
 
 export default function ListDetail({route, ...props}) {
+  useEffect(()=>{
+    console.log("listdetail")
+  })
   return (
     <ScrollView>
       <View style={styles.context}>

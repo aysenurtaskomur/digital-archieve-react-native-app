@@ -8,3 +8,4 @@ export const SAVE_LINK = 'SAVE_LINK';
 export const CREATE_LIST = "CREATE_LIST";
 export const GET_LIST = 'GET_LIST';
 export const GET_ALLHASHTAG = 'GET_ALLHASHTAG';
+export const GET_MATCH_HASHTAG = 'GET_MATCH_HASHTAG';

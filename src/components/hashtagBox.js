@@ -10,7 +10,7 @@ const hashtagBox = props => {
     <View style={{flex:1,flexDirection:'row'}}>
       {props.data ? props.data.map((item, index) => (
         <View key={index} style={styles.outline}>
-          <Text style={{fontSize:15}}>{item}</Text>
+          <Text style={{fontSize:15}}>{item} </Text>
         </View>
       )) : null}
     </View>
