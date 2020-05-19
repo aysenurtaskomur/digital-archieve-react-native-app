@@ -6,6 +6,5 @@ export default {
   linkInformation:[],
   listName: '', //modalda aldigin seyi buna ata sonra icini bosalt
   lists: [],
-  hashtagAll:[],
   matchingLinkInfo: [],
 }

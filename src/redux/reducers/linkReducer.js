@@ -6,12 +6,11 @@ export default (state = initialState, action) => {
     case actionTypes.SAVE_LINK:
       return {...state};
       
-    case actionTypes.GET_LIST:
+    case actionTypes.GET_LINK:
       var informationArr = []; 
       action.payload.forEach(doc => {
         informationArr.push(doc.data());
       });
-      // console.log("getlink reducer: ", informationArr)
       return {...state, linkInformation: informationArr};
     default:
       return state;

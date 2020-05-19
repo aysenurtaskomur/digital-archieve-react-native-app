@@ -1,33 +1,35 @@
 import React, {useEffect} from 'react';
 import {
-  Text,
   View,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-  Dimensions,
   ScrollView,
 } from 'react-native';
-import {Card, CardItem, Body} from 'native-base';
+import {connect} from 'react-redux';
 import LinkCard from '../../components/linkCard';
+import {getLink} from '../../redux/actions/linkActions';
 
-export default function ListDetail({route, ...props}) {
-  useEffect(()=>{
-    console.log("listdetail")
-  })
+function ListDetail({route, ...props}) {
+  useEffect(() => {
+    props.getLink(route.params.name);
+  }, []);
   return (
     <ScrollView>
-      <View style={styles.context}>
-        <LinkCard name={route.params.name} />
-      </View>
+      {props.linkInfo.map((item, index) => (
+        <View key={index}>
+          <LinkCard data={item} />
+        </View>
+      ))}
     </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-  context: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20,
-  },
-});
+
+const mapStateToProps = state => {
+  return {
+    linkInfo: state.LinkReducer.linkInformation,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {getLink},
+)(ListDetail);

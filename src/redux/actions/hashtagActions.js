@@ -1,25 +1,9 @@
 import * as actionTypes from './actionTypes';
 import * as firebase from 'firebase';
 
-export const getAllHashtag = () => {
+export const searchAllLinks = data => {
   const user = firebase.auth().currentUser;
-  return dispatch => {
-    firebase
-      .firestore()
-      .collection('users')
-      .doc(user.uid)
-      .onSnapshot(doc => {
-        dispatch({
-          type: actionTypes.GET_ALLHASHTAG,
-          payload: doc.data().allhashtag,
-        });
-      });
-  };
-};
-
-export const searchAllLinks = (data) => {
-  const user = firebase.auth().currentUser;
-  var dizi=[];
+  var dizi = [];
   return dispatch => {
     firebase
       .firestore()
@@ -29,8 +13,7 @@ export const searchAllLinks = (data) => {
       .onSnapshot(querySnapshot => {
         var documents = [];
         querySnapshot.forEach(doc => {
-           documents.push(doc.id);
-          // doc.id.forEach(()=>{console.log("oldu")})
+          documents.push(doc.id);
         });
         documents.forEach(i => {
           firebase
@@ -40,25 +23,15 @@ export const searchAllLinks = (data) => {
             .collection('Listeler')
             .doc(i)
             .collection('Kayıtlar')
-            // .where("hashtag", "array-contains", data)
             .get()
-            .then(querySnapshot=>{
-                
-                querySnapshot.forEach(doc => {
-                  dizi.push(doc.data());
-                
-                });
-                // console.log("hashtag reducer=> ", dizi);
-                dispatch({type:actionTypes.GET_MATCH_HASHTAG,payload:dizi})
-           
+            .then(querySnapshot => {
+              querySnapshot.forEach(doc => {
+                dizi.push(doc.data());
+              });
+              dispatch({type: actionTypes.GET_MATCH_HASHTAG, payload: dizi});
             })
-            .then(()=>{
-              
-            })
+            .then(() => {});
         });
-
-
-
       });
   };
 };

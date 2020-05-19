@@ -4,8 +4,10 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
 export const LOGIN_LOADING = 'LOGIN_LOADING';
-export const SAVE_LINK = 'SAVE_LINK';
+
+
 export const CREATE_LIST = "CREATE_LIST";
 export const GET_LIST = 'GET_LIST';
-export const GET_ALLHASHTAG = 'GET_ALLHASHTAG';
+export const SAVE_LINK = 'SAVE_LINK';
+export const GET_LINK = 'GET_LINK';
 export const GET_MATCH_HASHTAG = 'GET_MATCH_HASHTAG';
