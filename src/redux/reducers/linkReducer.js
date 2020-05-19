@@ -12,6 +12,9 @@ export default (state = initialState, action) => {
         informationArr.push(doc.data());
       });
       return {...state, linkInformation: informationArr};
+    
+    case actionTypes.GET_ALL_LINKS:
+    return {...state, allLinksInfo: action.payload};
     default:
       return state;
   }

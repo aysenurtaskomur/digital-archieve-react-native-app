@@ -10,4 +10,4 @@ export const CREATE_LIST = "CREATE_LIST";
 export const GET_LIST = 'GET_LIST';
 export const SAVE_LINK = 'SAVE_LINK';
 export const GET_LINK = 'GET_LINK';
-export const GET_MATCH_HASHTAG = 'GET_MATCH_HASHTAG';
+export const GET_ALL_LINKS = 'GET_ALL_LINKS';

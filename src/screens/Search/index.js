@@ -2,29 +2,29 @@ import React, {useEffect, useState} from 'react';
 import {View, FlatList} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import {connect} from 'react-redux';
-import {searchAllLinks} from '../../redux/actions/hashtagActions';
+import {getAllLinks} from '../../redux/actions/linkActions';
 import LinkCard from '../../components/linkCard';
 
 const Search = ({navigation, ...props}) => {
   const [search, setSearch] = useState('');
   const [dataSource, setDataSource] = useState('');
   useEffect(() => {
-    props.searchAllLinks();
+    props.getAllLinks();
   }, []);
 
   var matched;
   const searchFilterFunction = text => {
-    var matchingHashtags = [];
-    props.matchingLinks.map(item =>
-      item.hashtag.forEach(i => matchingHashtags.push(i)),
+    var allHashtags = [];
+    props.allLinksInfo.map(item =>
+      item.hashtag.forEach(i => allHashtags.push(i)),
     );
 
-    var tags = matchingHashtags.filter(item => {
+    var tags = allHashtags.filter(item => {
       const itemData = item ? item.toUpperCase() : ''.toUpperCase();
       const textData = text ? text.toUpperCase() : null;
       return itemData.indexOf(textData) > -1;
     });
-    matched = props.matchingLinks.filter(items => {
+    matched = props.allLinksInfo.filter(items => {
       var newData = items.hashtag.filter(value => {
         return tags.indexOf(value) !== -1;
       });
@@ -39,7 +39,7 @@ const Search = ({navigation, ...props}) => {
     <View>
       <SearchBar
         round
-        searchIcon={{size: 24}}
+        searchIcon={{size: 26,color:'orange'}}
         lightTheme={true}
         inputContainerStyle={{backgroundColor: 'white'}}
         containerStyle={{backgroundColor: '#F7F7F7'}}
@@ -52,7 +52,7 @@ const Search = ({navigation, ...props}) => {
 
       <FlatList
         data={dataSource}
-        renderItem={({item}) => <LinkCard data={item} />}
+        renderItem={({item}) => <LinkCard navigation={navigation} data={item} />}
         keyExtractor={item => item.id}
       />
     </View>
@@ -61,11 +61,11 @@ const Search = ({navigation, ...props}) => {
 
 const mapStateToProps = state => {
   return {
-    matchingLinks: state.HashtagReducer.matchingLinkInfo,
+    allLinksInfo: state.LinkReducer.allLinksInfo,
   };
 };
 
 export default connect(
   mapStateToProps,
-  {searchAllLinks},
+  {getAllLinks},
 )(Search);

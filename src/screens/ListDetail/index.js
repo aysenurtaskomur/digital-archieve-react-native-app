@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import LinkCard from '../../components/linkCard';
 import {getLink} from '../../redux/actions/linkActions';
 
-function ListDetail({route, ...props}) {
+function ListDetail({route,navigation, ...props}) {
   useEffect(() => {
     props.getLink(route.params.name);
   }, []);
@@ -15,7 +15,7 @@ function ListDetail({route, ...props}) {
     <ScrollView>
       {props.linkInfo.map((item, index) => (
         <View key={index}>
-          <LinkCard data={item} />
+          <LinkCard data={item} navigation={navigation} />
         </View>
       ))}
     </ScrollView>

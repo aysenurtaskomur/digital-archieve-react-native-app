@@ -13,6 +13,7 @@ import Login from './src/screens/Login';
 import Register from './src/screens/Register';
 import SplashPage from './src/screens/SplashPage';
 import ForgotPassword from './src/screens/ForgotPassword';
+import HashtagModal from './src/screens/HashtagModal';
 
 import Icons from './src/components/icons';
 import {createStore, applyMiddleware} from 'redux';
@@ -85,7 +86,7 @@ export function MainNavigator(props) {
 
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator initialRouteName="Home" mode="modal">
       <HomeStack.Screen
         name={'Home'}
         options={{headerShown: false}}
@@ -96,6 +97,7 @@ function HomeStackScreen() {
         component={ListDetail}
         options={{title:null}}
       />
+      <HomeStack.Screen name={'HashtagModal'} component={HashtagModal}/>
     </HomeStack.Navigator>
   );
 }

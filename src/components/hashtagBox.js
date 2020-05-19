@@ -1,19 +1,19 @@
 import React, {useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet,TouchableOpacity} from 'react-native';
 
 const hashtagBox = props => {
-  useEffect(() => {
-    console.log('x ', props.data);
-  });
-
+  
   return (
-    <View style={{flex:1,flexDirection:'row'}}>
+    <TouchableOpacity>
+      <View style={{flex:1,flexDirection:'row'}}>
       {props.data ? props.data.map((item, index) => (
         <View key={index} style={styles.outline}>
           <Text style={{fontSize:15}}>{item} </Text>
         </View>
       )) : null}
     </View>
+    </TouchableOpacity>
+    
   );
 };
 

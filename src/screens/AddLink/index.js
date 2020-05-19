@@ -7,7 +7,6 @@ import {Dropdown} from 'react-native-material-dropdown';
 import {connect} from 'react-redux';
 import {saveLink} from '../../redux/actions/linkActions';
 import {getList} from '../../redux/actions/listActions';
-import {getHashtag} from '../../redux/actions/hashtagActions';
 import {windowWidth, windowHeight} from '../../themes/constants';
 
 function AddLink({navigation, ...props}) {

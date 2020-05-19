@@ -6,7 +6,7 @@ import {getLink} from '../redux/actions/linkActions';
 import {connect} from 'react-redux';
 import {windowWidth, windowHeight} from '../themes/constants';
 
-const linkCard = ({data,...props}) => {
+const linkCard = ({data,navigation,...props}) => {
   useEffect(() => {
     console.log(data)
   }, []);
@@ -26,11 +26,15 @@ const linkCard = ({data,...props}) => {
         </View>
         <View style={{flex: 2, flexDirection: 'row'}}>
           {/* <HashtagBox data={item.hashtag} /> */}
+          
           {data.hashtag
             ? data.hashtag.map((hash, index) => (
-                <View key={index} style={styles.outline}>
-                  <Text style={{fontSize: 15}}>{hash} </Text>
+              <TouchableOpacity key={index} onPress={()=>{navigation.navigate('HashtagModal', {screentitle: hash})}}>
+                <View style={styles.outline}>
+                  <Text style={{fontSize: 16}}>{hash} </Text>
                 </View>
+              </TouchableOpacity>
+                
               ))
             : null}
         </View>
@@ -47,7 +51,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     width: windowWidth - 30,
     height: windowHeight / 6,
-    marginBottom: 15,
+    marginBottom: 5,
   },
   outline: {
     justifyContent: 'center',
@@ -58,14 +62,14 @@ const styles = StyleSheet.create({
     // width: 100,
     // height: 35,
     marginRight: 7,
-    marginBottom: 8,
+    marginBottom: 15,
     padding: 12,
   },
   context: {
     flex:1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 15,
   },
 });
 
