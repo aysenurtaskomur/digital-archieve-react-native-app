@@ -13,7 +13,7 @@ export const createList = listName => {
         .collection('Listeler')
         .doc(listName)
         .set({
-          liste: 'dfdfdd',
+          liste: listName,
         })
         .then(() => {
           dispatch({type: actionTypes.CREATE_LIST});

@@ -28,8 +28,7 @@ function Register({signUp, navigation, error, loading}) {
   const errorMsg = error ? <Text style={styles.errorText}>{error}</Text> : null;
 
   handleSubmit = values => {
-    signUp(values.email, values.password,navigation);
-    console.log(values.fullName);
+    signUp(values.email, values.password, values.fullName,navigation);
   };
 
   return (
@@ -41,7 +40,7 @@ function Register({signUp, navigation, error, loading}) {
           initialValues={{fullName: '', email: '', password: ''}}
           validationSchema={Yup.object().shape({
             fullName: Yup.string()
-              .max(16)
+              .max(20)
               .min(5, 'en az 5 karakter')
               .required('Fullname alanını zorunlu'),
             email: Yup.string()

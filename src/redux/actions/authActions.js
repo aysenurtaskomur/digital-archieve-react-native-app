@@ -2,7 +2,7 @@ import * as actionTypes from './actionTypes';
 import firebase from 'firebase';
 import {CommonActions} from '@react-navigation/native';
 
-export const signUp = (email, password, navigation) => {
+export const signUp = (email, password, fullName, navigation) => {
   return dispatch => {
     dispatch({type: actionTypes.LOGIN_LOADING});
 
@@ -27,9 +27,9 @@ export const signUp = (email, password, navigation) => {
               .doc(user.uid)
               .set({
                 id: user.uid,
+                fullName: fullName,
               })
               .then(() => {
-               
                 firebase
                   .firestore()
                   .collection('users')
@@ -37,19 +37,12 @@ export const signUp = (email, password, navigation) => {
                   .collection('Listeler')
                   .doc('Tüm Kayıtlarım')
                   .set({
-                    sdfsdf : 'dfdfs'
+                    liste: 'Tüm Kayıtlarım',
                   })
                   .then(() => {
                     console.log('yazildi');
                   });
               });
-            // firebase
-            //   .firestore()
-            //   .collection('users')
-            //   .doc(user.uid)
-            //   .collection('Listeler')
-            //   .doc('Tüm Kayıtlarım')
-            //   .then(()=>{console.log("ass")});
           }
         });
       })
@@ -76,6 +69,21 @@ export const signIn = (email, password, navigation) => {
       })
       .catch(err => {
         dispatch({type: actionTypes.LOGIN_FAILURE, payload: err.message});
+      });
+  };
+};
+
+export const getFullName = () => {
+  const user = firebase.auth().currentUser;
+  return dispatch => {
+    firebase
+      .firestore()
+      .collection('users')
+      .doc(user.uid)
+      .get()
+      .then(doc => {
+        // console.log(doc.data().fullName);
+        dispatch({type:actionTypes.GET_USER_DATA,payload:doc.data().fullName})
       });
   };
 };

@@ -12,7 +12,10 @@ const images = {
   ProfileActive: require('../../assets/profile-active.png'),
   ProfileInactive: require('../../assets/profile-inactive.png'),
   AddList: require('../../assets/add-list.png'),
-  AddHashtag: require('../../assets/add-hashtag.png')
+  AddHashtag: require('../../assets/add-hashtag.png'),
+  Trash: require('../../assets/trash.png'),
+  Checked: require('../../assets/check.png'),
+  Arrow: require('../../assets/arrow-right.png')
 }
 
 module.exports = images;

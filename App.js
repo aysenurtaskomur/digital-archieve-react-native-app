@@ -97,7 +97,7 @@ function HomeStackScreen() {
         component={ListDetail}
         options={{title:null}}
       />
-      <HomeStack.Screen name={'HashtagModal'} component={HashtagModal}/>
+      <HomeStack.Screen name={'HashtagModal'} component={HashtagModal}  options={{title:null}}/>
     </HomeStack.Navigator>
   );
 }

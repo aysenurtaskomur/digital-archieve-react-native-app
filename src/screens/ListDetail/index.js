@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect,useLayoutEffect} from 'react';
 import {
   View,
   ScrollView,
@@ -8,6 +8,11 @@ import LinkCard from '../../components/linkCard';
 import {getLink} from '../../redux/actions/linkActions';
 
 function ListDetail({route,navigation, ...props}) {
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: route.params.name
+    })
+  }, [])
   useEffect(() => {
     props.getLink(route.params.name);
   }, []);
@@ -15,7 +20,7 @@ function ListDetail({route,navigation, ...props}) {
     <ScrollView>
       {props.linkInfo.map((item, index) => (
         <View key={index}>
-          <LinkCard data={item} navigation={navigation} />
+          <LinkCard data={item} navigation={navigation} listName={route.params.name}/>
         </View>
       ))}
     </ScrollView>

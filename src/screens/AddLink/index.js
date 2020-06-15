@@ -1,5 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, TouchableOpacity, Image, Text} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Modal,
+  Text,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import InputComp from '../../components/input';
 import ButtonComp from '../../components/button';
 import Images from '../../themes/images';
@@ -14,6 +22,7 @@ function AddLink({navigation, ...props}) {
   const [list, setList] = useState('');
   const [click, setClick] = useState(false);
   const [hashtag, setHashtag] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     props.getList();
@@ -50,6 +59,30 @@ function AddLink({navigation, ...props}) {
     <View
       style={{flex: 1, justifyContent: 'center', backgroundColor: '#F7F7F7'}}>
       <View style={styles.container}>
+        <Modal
+          // animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            {
+              setModalVisible(!modalVisible);
+            }
+          }}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              setModalVisible(!modalVisible);
+            }}>
+            <View style={styles.centeredView}>
+              <View style={[styles.modalView, {backgroundColor: 'orange'}]}>
+                <Image
+                  source={Images.Checked}
+                  style={{backgroundColor: 'orange'}}
+                />
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+
         {/* sadece link verilebilmeli */}
         <InputComp
           placeholder="Kayıt Ekle"
@@ -72,7 +105,8 @@ function AddLink({navigation, ...props}) {
             setList(value);
           }}
           value={list}
-          //default tüm kayıtlar secili olsun
+          placeholder="Liste Seç"
+          // value={props.listNames[0]}
         />
       </View>
       <View style={{alignItems: 'flex-end', marginRight: 30}}>
@@ -83,6 +117,14 @@ function AddLink({navigation, ...props}) {
           title="Ekle"
           onPress={() => {
             props.saveLink(link, list, hashtag);
+            {
+              if (props.addedLink === true) {
+                setModalVisible(true);
+              }
+              setTimeout(() => {
+                setModalVisible(false);
+              }, 2000);
+            }
           }}
         />
       </View>
@@ -117,11 +159,35 @@ const styles = StyleSheet.create({
     padding: 7,
     borderRadius: 50,
   },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    width: windowWidth - windowWidth / 4,
+    shadowColor: 'grey',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    elevation: 6,
+    width: windowWidth - 50,
+  },
 });
 
 const mapStateToProps = state => {
   return {
     listNames: state.ListReducer.lists,
+    addedLink: state.LinkReducer.addedLink,
   };
 };
 

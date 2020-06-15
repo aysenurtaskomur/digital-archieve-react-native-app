@@ -35,11 +35,15 @@ const Search = ({navigation, ...props}) => {
     setDataSource(matched);
   };
 
+  const renderCard = (item, navigation) => {
+    return <LinkCard navigation={navigation} data={item} listName={item.listname}/>
+  };
+
   return (
     <View>
       <SearchBar
         round
-        searchIcon={{size: 26,color:'orange'}}
+        searchIcon={{size: 26, color: 'orange'}}
         lightTheme={true}
         inputContainerStyle={{backgroundColor: 'white'}}
         containerStyle={{backgroundColor: '#F7F7F7'}}
@@ -50,9 +54,10 @@ const Search = ({navigation, ...props}) => {
         value={search}
       />
 
+      {/* listName propsu gondermen gerek buradan da. */}
       <FlatList
         data={dataSource}
-        renderItem={({item}) => <LinkCard navigation={navigation} data={item} />}
+        renderItem={({item}) => renderCard(item, navigation)}
         keyExtractor={item => item.id}
       />
     </View>

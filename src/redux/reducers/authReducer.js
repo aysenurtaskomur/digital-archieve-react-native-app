@@ -34,6 +34,11 @@ export default (state = initialState, action) => {
         ...state,
         loading: true
       }
+    case actionTypes.GET_USER_DATA:
+      return {
+        ...state,
+        fullName:action.payload,
+      }
     default:
       return state;
   }
