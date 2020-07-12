@@ -20,11 +20,10 @@ function Home({navigation, value, ...props}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [listeAdi, setListeAdi] = useState('');
 
-  
-
   function addList(listeAdi) {
     props.createList(listeAdi);
     setModalVisible(!modalVisible);
+    setListeAdi('');
   }
 
   return (
@@ -128,7 +127,13 @@ const styles = StyleSheet.create({
   },
 });
 
+const mapStateToProps = state => {
+  return {
+     listName: state.ListReducer.listName
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   {createList},
 )(Home);

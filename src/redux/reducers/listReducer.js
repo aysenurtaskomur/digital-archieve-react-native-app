@@ -11,6 +11,10 @@ export default (state = initialState, action) => {
         listNames.push(doc.id);
       });
       return {...state, lists: listNames};
+    case actionTypes.DELETE_LIST_SUCCESS:
+      return {...state, deleteList: true};
+    case actionTypes.DELETE_LIST_FAILURE:
+      return {...state,  delError: 'Silinemedi'};
     default:
       return state;
   }

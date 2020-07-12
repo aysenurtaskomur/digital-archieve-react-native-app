@@ -1,34 +1,48 @@
 import React, {useEffect} from 'react';
 import {View, Text, StyleSheet,TouchableOpacity} from 'react-native';
+import {windowWidth, windowHeight} from '../themes/constants';
 
-const hashtagBox = props => {
+const hashtagBox = ({data,hash,index,navigation}) => {
   
   return (
-    <TouchableOpacity>
-      <View style={{flex:1,flexDirection:'row'}}>
-      {props.data ? props.data.map((item, index) => (
-        <View key={index} style={styles.outline}>
-          <Text style={{fontSize:15}}>{item} </Text>
-        </View>
-      )) : null}
+    <View style={{flexDirection: 'row', flexWrap: 'wrap',width:windowWidth-60,}}>
+      {data.hashtag ?
+      data.hashtag.map(
+        (hash, index) =>
+          hash !== null ?  (
+        <TouchableOpacity
+          key={index}
+          style={styles.outline}
+          onPress={() => {
+            navigation.navigate('HashtagModal', {
+              screentitle: hash,
+            });
+          }}>
+            <Text style={{fontSize: 14, color: 'white'}}>
+              {hash}
+            </Text>
+        </TouchableOpacity>
+        
+        
+        ) : null
+      ):null}
     </View>
-    </TouchableOpacity>
     
   );
 };
 
 const styles = StyleSheet.create({
   outline: {
-    justifyContent:'center',
-    alignItems:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 50,
+    backgroundColor: 'orange',
     borderColor: 'orange',
     borderWidth: 2,
-    // width: 100,
-    // height: 35,
-    marginRight:7,
-    marginBottom:8,
-    padding:12
+    marginRight: 7,
+    marginBottom: 15,
+    marginTop:10,
+    padding: 12,
   },
 });
 

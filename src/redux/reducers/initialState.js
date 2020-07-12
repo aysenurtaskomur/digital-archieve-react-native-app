@@ -5,11 +5,12 @@ export default {
   fullName: '',
   // links: [],
   linkInformation:[],
-  listName: '', //modalda aldigin seyi buna ata sonra icini bosalt
   lists: [],
   allLinksInfo: [],
   selectedHashLinks: [],
   delete: false,
   deleteError: '',
   addedLink: false,
+  deleteList:false,
+  delError:null
 }

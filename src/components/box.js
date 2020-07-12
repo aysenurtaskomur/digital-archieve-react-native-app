@@ -1,43 +1,83 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
   StyleSheet,
   TouchableOpacity,
-  Dimensions,
+  Image,
+  Alert,
 } from 'react-native';
 import {ScreenContainer} from 'react-native-screens';
 import {FlatGrid} from 'react-native-super-grid';
 import {connect} from 'react-redux';
-import {getList} from '../redux/actions/listActions';
-import {getLink} from '../redux/actions/linkActions';
-import {windowWidth,windowHeight} from '../themes/constants';
+import {getList, deleteList} from '../redux/actions/listActions';
+import {windowWidth, windowHeight} from '../themes/constants';
+import Images from '../themes/images';
 
 const box = ({navigation, ...props}) => {
   useEffect(() => {
     props.getList();
+    
   }, []);
+  console.log("deleteList: " + props.delete + " delError: " + props.delError);
 
-  let items = props.currentLists.map(item => ({name: item, code: '#79F021'}));
+  const items = props.currentLists.map(item => ({
+    name: item,
+    code: '#79F021',
+    longPressed: false,
+  }));
+
+  const [data, setData] = useState(items);
+
+  const content = param => {
+    let temp = [...data];
+    let currentValue = data[param]['longPressed'];
+    temp[param]['longPressed'] = !currentValue;
+    setData(temp);
+  };
+
+  const deleteFunc = name => {
+    props.deleteList(name);
+    if (props.delete==true) {
+      var liste = items.filter(item => {
+        if (item.name == name) return item;
+      });
+      items.pop(liste);
+
+      setData(items);
+    } else if (props.delError !== null) {
+      console.log(props.delError)
+    }
+  };
 
   return (
     <View>
       <FlatGrid
         itemDimension={130}
-        items={items}
+        items={data}
         style={styles.gridView}
-        // staticDimension={300}
-        //fixed
         spacing={18}
         renderItem={({item, index}) => (
           <TouchableOpacity
+            onLongPress={() => {
+              content(index);
+            }}
+            key={index}
             style={[styles.itemContainer, {backgroundColor: item.code}]}
             onPress={() => {
-                
               navigation.navigate('ListDetail', {name: item.name});
             }}>
-            <View style={{flex:1,justifyContent: 'center',alignItems:'center'}}>
-              <Text style={styles.itemName}>{item.name}</Text>
+            <View style={styles.content}>
+              {item.longPressed == true ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    deleteFunc(item.name);
+                  }}>
+                  <Image source={Images.BigTrash} />
+                </TouchableOpacity>
+              ) : (
+                <Text style={styles.itemName}> {item.name} </Text>
+              )}
             </View>
           </TouchableOpacity>
         )}
@@ -47,9 +87,10 @@ const box = ({navigation, ...props}) => {
 };
 
 const styles = StyleSheet.create({
-  gridView: {
-    //marginTop: 10,
-    //flex: 1,
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   itemContainer: {
     justifyContent: 'flex-end',
@@ -78,10 +119,12 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     currentLists: state.ListReducer.lists,
+    delete: state.ListReducer.deleteList,
+    delError: state.ListReducer.delError,
   };
 };
 
 export default connect(
   mapStateToProps,
-  {getList,getLink},
+  {getList, deleteList},
 )(box);

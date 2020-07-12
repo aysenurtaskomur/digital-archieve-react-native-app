@@ -28,6 +28,7 @@ const linkCard = ({data, navigation, listName, ...props}) => {
     setModalVisible(false);
     setDel(false);
   };
+
   return (
     <View style={styles.context}>
       <TouchableWithoutFeedback
@@ -39,69 +40,39 @@ const linkCard = ({data, navigation, listName, ...props}) => {
           cardMaxElevation={7}
           cornerRadius={15}
           style={styles.cardLink}>
-          {del === true ? (
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                alignItems: 'center',
-              }}>
-              <TouchableOpacity
-                style={styles.hashtagButton}
-                onPress={() => {
-                  setModalVisible(true);
-                }}>
-                <Image source={Images.AddHashtag} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.hashtagButton}
-                onPress={() => {
-                  props.deleteLink(data.link, listName);
-                  setDel(false);
-                }}>
-                <Image source={Images.Trash} />
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <>
-              <View style={{flex: 2, flexDirection: 'row'}}>
+          <View style={del === true ? styles.pressedView : null}>
+            {del === true ? (
+              <>
                 <TouchableOpacity
-                  style={{flex: 1}}
-                  onPress={() => Linking.openURL(data.link)}>
-                  <Text style={{fontSize: 16, color: 'black'}}>
-                    {data.link}
-                  </Text>
+                  style={styles.hashtagButton}
+                  onPress={() => {
+                    setModalVisible(true);
+                  }}>
+                  <Image source={Images.AddHashtag} />
                 </TouchableOpacity>
-              </View>
-              <View style={{flex: 2, flexDirection: 'row',}}>
-                {/* <HashtagBox data={item.hashtag} /> */}
-                {data.hashtag
-                  ? data.hashtag.map((hash, index) => (
-                      hash !== null ?
-                      (
-                        <TouchableOpacity
-                        key={index}
-                        onPress={() => {
-                          navigation.navigate('HashtagModal', {
-                            screentitle: hash,
-                          });
-                        }}>
-                        <View style={styles.outline}>
-                          <Text style={{fontSize: 14, color: 'white'}}>
-                            {hash}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                      ): null
-                      
-                    
-                      
-                    ))
-                  : null}
-              </View>
-            </>
-          )}
+                <TouchableOpacity
+                  style={styles.hashtagButton}
+                  onPress={() => {
+                    props.deleteLink(data.link, listName);
+                    setDel(false);
+                  }}>
+                  <Image source={Images.Trash} />
+                </TouchableOpacity>
+              </>
+            ) : (
+              <>
+                <View>
+                  <TouchableOpacity onPress={() => Linking.openURL(data.link)}>
+                    <Text style={{fontSize: 16, color: 'black'}}>
+                      {data.link}
+                    </Text>
+                  </TouchableOpacity>
+
+                  <HashtagBox data={data} navigation={navigation} />
+                </View>
+              </>
+            )}
+          </View>
         </CardView>
       </TouchableWithoutFeedback>
 
@@ -149,8 +120,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     backgroundColor: 'white',
     width: windowWidth - 30,
-    height: windowHeight / 6,
-    marginBottom: 5,
+    //heigt i ac
+    //height: windowHeight / 6,
+    marginBottom: 25,
+    paddingBottom: 20,
   },
   outline: {
     justifyContent: 'center',
@@ -159,8 +132,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'orange',
     borderColor: 'orange',
     borderWidth: 2,
-    // width: 100,
-    // height: 35,
     marginRight: 7,
     marginBottom: 15,
     padding: 12,
@@ -169,7 +140,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 15,
+    //marginTop: 25,
   },
   hashtagButton: {
     backgroundColor: '#FFC107',
@@ -198,6 +169,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 22,
+  },
+  pressedView: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
 });
 

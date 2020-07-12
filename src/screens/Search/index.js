@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, FlatList} from 'react-native';
+import {View, FlatList, ScrollView, StyleSheet, Text} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {getAllLinks} from '../../redux/actions/linkActions';
@@ -10,6 +10,7 @@ const Search = ({navigation, ...props}) => {
   const [dataSource, setDataSource] = useState('');
   useEffect(() => {
     props.getAllLinks();
+    searchBar;
   }, []);
 
   var matched;
@@ -36,30 +37,40 @@ const Search = ({navigation, ...props}) => {
   };
 
   const renderCard = (item, navigation) => {
-    return <LinkCard navigation={navigation} data={item} listName={item.listname}/>
+    return (
+      <LinkCard navigation={navigation} data={item} listName={item.listname} />
+     
+    );
   };
-
+  
+  function searchBar(){
+    return (
+      <View style={{marginBottom: 25}}>
+        <SearchBar
+          round
+          searchIcon={{size: 26, color: 'orange'}}
+          lightTheme={true}
+          inputContainerStyle={{backgroundColor: 'white'}}
+          containerStyle={{backgroundColor: '#F7F7F7'}}
+          placeholder="Hashtag ile Ara"
+          onChangeText={value => {
+            searchFilterFunction(value);
+          }}
+          value={search}
+        />
+      </View>
+    );
+  };
   return (
     <View>
-      <SearchBar
-        round
-        searchIcon={{size: 26, color: 'orange'}}
-        lightTheme={true}
-        inputContainerStyle={{backgroundColor: 'white'}}
-        containerStyle={{backgroundColor: '#F7F7F7'}}
-        placeholder="Hashtag ile Ara"
-        onChangeText={value => {
-          searchFilterFunction(value);
-        }}
-        value={search}
-      />
-
-      {/* listName propsu gondermen gerek buradan da. */}
       <FlatList
         data={dataSource}
+        ListHeaderComponent={searchBar}
+        stickyHeaderIndices={[0]}
         renderItem={({item}) => renderCard(item, navigation)}
         keyExtractor={item => item.id}
       />
+
     </View>
   );
 };
@@ -74,3 +85,16 @@ export default connect(
   mapStateToProps,
   {getAllLinks},
 )(Search);
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'relative',
+  },
+  fixed: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+});

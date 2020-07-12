@@ -14,6 +14,7 @@ const images = {
   AddList: require('../../assets/add-list.png'),
   AddHashtag: require('../../assets/add-hashtag.png'),
   Trash: require('../../assets/trash.png'),
+  BigTrash: require('../../assets/bigtrash.png'),
   Checked: require('../../assets/check.png'),
   Arrow: require('../../assets/arrow-right.png')
 }
