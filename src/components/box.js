@@ -17,9 +17,7 @@ import Images from '../themes/images';
 const box = ({navigation, ...props}) => {
   useEffect(() => {
     props.getList();
-    
   }, []);
-  console.log("deleteList: " + props.delete + " delError: " + props.delError);
 
   const items = props.currentLists.map(item => ({
     name: item,
@@ -38,16 +36,17 @@ const box = ({navigation, ...props}) => {
 
   const deleteFunc = name => {
     props.deleteList(name);
-    if (props.delete==true) {
+    console.log("delete List :" + props.delete +" delete error :"+ props.delError)
+    if(!props.delError){
       var liste = items.filter(item => {
-        if (item.name == name) return item;
-      });
-      items.pop(liste);
-
-      setData(items);
-    } else if (props.delError !== null) {
-      console.log(props.delError)
+      if (item.name == name) return item;
+    });
+    items.pop(liste);
+    setData(items);
+    }else{
+      Alert.alert(props.delError)
     }
+   
   };
 
   return (

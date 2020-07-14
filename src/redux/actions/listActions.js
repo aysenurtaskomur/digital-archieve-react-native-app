@@ -16,7 +16,7 @@ export const createList = listName => {
           liste: listName,
         })
         .then(() => {
-          dispatch({type: actionTypes.CREATE_LIST});
+          dispatch({type: actionTypes.CREATE_LIST,payload:listName});
         })
         .catch(error => {
           console.log(error);
@@ -54,7 +54,7 @@ export const deleteList = name => {
         dispatch({type: actionTypes.DELETE_LIST_SUCCESS});
       })
       .catch(() => {
-        dispatch({type: actionTypes.DELETE_LINK_FAILURE});
+        dispatch({type: actionTypes.DELETE_LIST_FAILURE});
       });
 
   };

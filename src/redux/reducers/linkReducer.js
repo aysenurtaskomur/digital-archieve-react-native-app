@@ -23,13 +23,12 @@ export default (state = initialState, action) => {
       });
       return {...state, selectedHashLinks: selected};
 
-    // case actionTypes.DELETE_LINK_LOADING:
-    //   return {...state, delete:true}
-
     case actionTypes.DELETE_LINK_SUCCESS:
+      console.log('deleted link')
       return {...state, delete:true}
 
     case actionTypes.DELETE_LINK_FAILURE:
+      console.log("delete link error")
       return {...state, delete:false, deleteError: 'Silinemedi'}
 
     default:
