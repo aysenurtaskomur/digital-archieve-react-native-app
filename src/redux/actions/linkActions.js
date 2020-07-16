@@ -128,7 +128,7 @@ export const deleteLink = (data, listName) => {
       .doc(newData)
       .delete()
       .then(() => {
-        dispatch({type: actionTypes.DELETE_LINK_SUCCESS});
+        dispatch({type: actionTypes.DELETE_LINK_SUCCESS,payload:listName});
       })
       .catch(() => {
         dispatch({type: actionTypes.DELETE_LINK_FAILURE});

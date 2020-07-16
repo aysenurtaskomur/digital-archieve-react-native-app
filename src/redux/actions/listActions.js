@@ -4,10 +4,8 @@ import firebase from 'firebase';
 export const createList = listName => {
   const user = firebase.auth().currentUser;
   return dispatch => {
-    return dispatch({
-      type: actionTypes.CREATE_LIST,
-      payload: firebase
-        .firestore()
+      firebase
+      .firestore()
         .collection('users')
         .doc(user.uid)
         .collection('Listeler')
@@ -16,12 +14,11 @@ export const createList = listName => {
           liste: listName,
         })
         .then(() => {
-          dispatch({type: actionTypes.CREATE_LIST,payload:listName});
+          dispatch({type: actionTypes.CREATE_LIST_SUCCESS,payload:listName});
         })
-        .catch(error => {
-          console.log(error);
-        }),
-    });
+        .catch(() => {
+          dispatch({type: actionTypes.CREATE_LIST_FAILURE});
+        })
   };
 };
 

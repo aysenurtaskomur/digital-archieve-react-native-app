@@ -12,5 +12,7 @@ export default {
   deleteError: '',
   addedLink: false,
   deleteList:false,
-  delError:null
+  delError:null,
+  createList:false,
+  createError:false
 }

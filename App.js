@@ -5,8 +5,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Search from './src/screens/Search';
 import AddLink from './src/screens/AddLink';
-import Calendar from './src/screens/Calendar';
-import Profile from './src/screens/Profile';
 import ListDetail from './src/screens/ListDetail';
 import Home from './src/screens/Home';
 import Login from './src/screens/Login';
@@ -46,7 +44,7 @@ if (!global.atob) {
 }
 
 export function MainNavigator(props) {
-// console.log("mainnavigator: ",props.route.params.extraData)
+  // console.log("mainnavigator: ",props.route.params.extraData)
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -58,12 +56,6 @@ export function MainNavigator(props) {
             iconName = focused ? Images.HomeActive : Images.HomeInactive;
           } else if (route.name === 'Search') {
             iconName = focused ? Images.SearchActive : Images.SearchInactive;
-          } else if (route.name === 'Profile') {
-            iconName = focused ? Images.ProfileActive : Images.ProfileInactive;
-          } else if (route.name === 'Calendar') {
-            iconName = focused
-              ? Images.CalendarActive
-              : Images.CalendarInactive;
           } else if (route.name === 'AddLink') {
             iconName = focused ? Images.AddActive : Images.AddInactive;
           }
@@ -75,11 +67,13 @@ export function MainNavigator(props) {
         activeTintColor: 'grey',
         inactiveTintColor: 'gray',
       }}>
-      <Tab.Screen name="Calendar" component={Calendar} />
-      <Tab.Screen name="AddLink" initialParams={{data:props.route.params.extraData }} component={AddLink} />
+      <Tab.Screen
+        name="AddLink"
+        initialParams={{data: props.route.params.extraData}}
+        component={AddLink}
+      />
       <Tab.Screen name="Home" component={HomeStackScreen} />
       <Tab.Screen name="Search" component={Search} />
-      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 }
@@ -89,19 +83,24 @@ function HomeStackScreen() {
     <HomeStack.Navigator initialRouteName="Home" mode="modal">
       <HomeStack.Screen
         name={'Home'}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+        }}
         component={Home}
       />
       <HomeStack.Screen
         name={'ListDetail'}
         component={ListDetail}
-        options={{title:null}}
+        options={{title: null}}
       />
-      <HomeStack.Screen name={'HashtagModal'} component={HashtagModal}  options={{title:null}}/>
+      <HomeStack.Screen
+        name={'HashtagModal'}
+        component={HashtagModal}
+        options={{title: null}}
+      />
     </HomeStack.Navigator>
   );
 }
-
 
 export default function App(props) {
   const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
@@ -151,7 +150,6 @@ export default function App(props) {
               extraData: props.url,
             }}
           />
-       
         </MainStack.Navigator>
       </NavigationContainer>
     </Provider>

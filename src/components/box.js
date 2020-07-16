@@ -10,14 +10,15 @@ import {
 import {ScreenContainer} from 'react-native-screens';
 import {FlatGrid} from 'react-native-super-grid';
 import {connect} from 'react-redux';
-import {getList, deleteList} from '../redux/actions/listActions';
+import {deleteList,getList} from '../redux/actions/listActions';
 import {windowWidth, windowHeight} from '../themes/constants';
 import Images from '../themes/images';
+import PropTypes from 'prop-types';
 
 const box = ({navigation, ...props}) => {
   useEffect(() => {
     props.getList();
-  }, []);
+  }, [])
 
   const items = props.currentLists.map(item => ({
     name: item,
@@ -36,17 +37,15 @@ const box = ({navigation, ...props}) => {
 
   const deleteFunc = name => {
     props.deleteList(name);
-    console.log("delete List :" + props.delete +" delete error :"+ props.delError)
-    if(!props.delError){
+    if (!props.delError) {
       var liste = items.filter(item => {
-      if (item.name == name) return item;
-    });
-    items.pop(liste);
-    setData(items);
-    }else{
-      Alert.alert(props.delError)
+        if (item.name == name) return item;
+      });
+      items.pop(liste);
+      setData(items);
+    } else {
+      Alert.alert(props.delError);
     }
-   
   };
 
   return (
@@ -115,6 +114,10 @@ const styles = StyleSheet.create({
   },
 });
 
+box.propTypes = {
+  currentLists: PropTypes.array.isRequired,
+};
+
 const mapStateToProps = state => {
   return {
     currentLists: state.ListReducer.lists,
@@ -125,5 +128,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  {getList, deleteList},
+  {deleteList,getList},
 )(box);

@@ -22,7 +22,6 @@ const HashtagModal = ({navigation, ...props}) => {
   return (
     <ScrollView>
     <View style={{paddingTop: 25}}>
-      <Button title="fdfd"/>
       {props.selectedInfo && props.selectedInfo.map((item,index) => (
         <View key={index}>
           <LinkCard data={item} navigation={navigation}/>

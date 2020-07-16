@@ -7,28 +7,29 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
 } from 'react-native';
-import ListBox from '../../components/listBox';
+import Box from '../../components/box';
 import InputComp from '../../components/input';
 import ButtonComp from '../../components/button';
 import FabComp from '../../components/fab';
 import firebase from 'firebase';
 import {connect} from 'react-redux';
-import {createList} from '../../redux/actions/listActions';
+import {createList, getList} from '../../redux/actions/listActions';
 const windowWidth = Dimensions.get('window').width;
 
-function Home({navigation, value, ...props}) {
+const Home = ({navigation, value, ...props}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [listeAdi, setListeAdi] = useState('');
 
-  function addList(listeAdi) {
+  const addList = listeAdi => {
+    console.log('addlist');
     props.createList(listeAdi);
     setModalVisible(!modalVisible);
     setListeAdi('');
-  }
+  };
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <ListBox navigation={navigation} />
+      <Box navigation={navigation} />
 
       <FabComp
         onPress={() => {
@@ -45,33 +46,36 @@ function Home({navigation, value, ...props}) {
             setModalVisible(!modalVisible);
           }
         }}>
-      <TouchableWithoutFeedback onPress={() =>  {setModalVisible(!modalVisible)}}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <InputComp
-              onChangeText={value => {
-                setListeAdi(value);
-              }}
-              style={styles.listnameInput}
-              value={listeAdi}
-              placeholder="Liste Adı"
-            />
+        <TouchableWithoutFeedback
+          onPress={() => {
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <InputComp
+                onChangeText={value => {
+                  setListeAdi(value);
+                }}
+                style={styles.listnameInput}
+                value={listeAdi}
+                placeholder="Liste Adı"
+              />
 
-            <ButtonComp
-              title="Oluştur"
-              onPress={() => {
-                addList(listeAdi);
-              }}
-            />
+              <ButtonComp
+                title="Oluştur"
+                onPress={() => {
+                  addList(listeAdi);
+                }}
+              />
+            </View>
           </View>
-        </View> 
         </TouchableWithoutFeedback>
       </Modal>
-     
-     <Text>{props.value}</Text>
+
+      <Text>{props.value}</Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   centeredView: {
@@ -129,11 +133,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-     listName: state.ListReducer.listName
+    addedList: state.ListReducer.createList,
+    currentLists: state.ListReducer.lists,
+    createError: state.ListReducer.createError,
   };
 };
 
 export default connect(
   mapStateToProps,
-  {createList},
+  {createList, getList},
 )(Home);
