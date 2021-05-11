@@ -19,7 +19,7 @@
     "firebase": "^7.11.0",
     "formik": "^2.1.4",
     "jetifier": "^1.6.5",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "native-base": "^2.13.12",
     "react": "16.9.0",
     "react-native": "0.61.5",
